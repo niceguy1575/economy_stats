@@ -25,6 +25,7 @@
 - notion
 
 💁‍♀️ 페이스북 노션 홈페이지 홍보: [http://asq.kr/79zMEd5c0ri2](http://asq.kr/79zMEd5c0ri2)
+😊 참고 강의: http://frindle.co.kr/
 
 ## 참고 site
 
@@ -45,3 +46,10 @@
 4. notion py
 
     [https://github.com/jamalex/notion-py](https://github.com/jamalex/notion-py)
+
+## 향후 보안사항
+
+1. 채권관련 index 추가
+2. 리보금리기반 장단기 금리차 확인
+3. 회사채 내용 반영
+
