@@ -10,6 +10,20 @@
 2. 관심 통계 자료 생성
 3.  notion upload
 
+## 실행방법
+1. git clone 및 경로로 이동
+2. bash 명령어 실행: **./run/economy_run.sh**
+
+### 활용 패키지 목록
+
+- pandas
+- requests
+- re
+- numpy
+- matplotlib
+- PyMuPDF
+- notion
+
 💁‍♀️ 페이스북 노션 홈페이지 홍보: [http://asq.kr/79zMEd5c0ri2](http://asq.kr/79zMEd5c0ri2)
 
 ## 참고 site
