@@ -28,6 +28,8 @@
 
 😊 참고 강의: http://frindle.co.kr/
 
+예시 URL: https://www.notion.so/niceguy1575/2020-10-08-0e39c38529de4eb4a4732efa6d1a2a44
+
 ## 참고 site
 
 1. FRED
