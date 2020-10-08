@@ -1,1 +1,33 @@
-# economy_stats
+# notion을 활용한 경제 지표 모니터링
+
+미국 경제 지표를  일 단위로 수집하고 notion에서 모니터링 하기 위한 목표를 가지고 있습니다.
+
+주요 활용 프로그램은 python이며 notion-py 패키지를 적극적으로 활용했습니다. 
+
+상세 수행 내역은 다음과 같습니다.
+
+1.  FRED 등 다양한 미국 경제 지표 수집
+2. 관심 통계 자료 생성
+3.  notion upload
+
+💁‍♀️ 페이스북 노션 홈페이지 홍보: [http://asq.kr/79zMEd5c0ri2](http://asq.kr/79zMEd5c0ri2)
+
+## 참고 site
+
+1. FRED
+
+    [https://fred.stlouisfed.org/](https://fred.stlouisfed.org/)
+
+    [https://fred.stlouisfed.org/docs/api/fred/](https://fred.stlouisfed.org/docs/api/fred/)
+
+2. US PMI
+
+    [https://tradingeconomics.com/united-states/business-confidence](https://tradingeconomics.com/united-states/business-confidence)
+
+3. S&P 500 12 fwd eps
+
+    [https://insight.factset.com/sp-500-forward-p/e-ratio-rises-above-20.0-as-eps-estimates-continue-to-fall](https://insight.factset.com/sp-500-forward-p/e-ratio-rises-above-20.0-as-eps-estimates-continue-to-fall)
+
+4. notion py
+
+    [https://github.com/jamalex/notion-py](https://github.com/jamalex/notion-py)
