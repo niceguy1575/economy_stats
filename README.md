@@ -6,13 +6,13 @@
 
 상세 수행 내역은 다음과 같습니다.
 
-1.  FRED 등 다양한 미국 경제 지표 수집
+1. FRED 등 다양한 미국 경제 지표 수집
 2. 관심 통계 자료 생성
-3.  notion upload
+3. notion upload
 
 ## 실행방법
-1. git clone 및 경로로 이동
-2. bash 명령어 실행: **./run/economy_run.sh**
+1. git clone 및 run 경로로 이동
+2. bash 명령어 실행: **./economy_run.sh**
 
 ### 활용 패키지 목록
 
