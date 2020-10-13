@@ -1,8 +1,0 @@
-label|stats
-sector|Financial Services
-시가총액|352413155328
-배당률|1.6
-PER|48.718517
-EPS|7.226
-종가|352.39
-적정주가|907.65786
