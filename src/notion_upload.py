@@ -67,7 +67,8 @@ child_page.children.add_new(TextBlock, title = 'TED RATE 전월대비 증가율:
 child_page.children.add_new(TextBlock, title = 'TED RATE 전분기대비 증가율: ' + ted_value[2] + "%")
 
 # 1-4. ted graph
-child_page.children.add_new(SubsubheaderBlock, title = 'TED RATE 6month')
+child_page.children.add_new(SubsubheaderBlock, title = 'TED RATE 6month(기준: 1)')
+child_page.children.add_new(TextBlock, title = 'TED Rate: 3개월 리보금리 - 3개월 미국국채금리')
 
 ted_img = child_page.children.add_new(ImageBlock, width=500)
 ted_img.upload_file(data_path + "TED.png")
@@ -79,6 +80,13 @@ pmi_img = child_page.children.add_new(ImageBlock, width=500)
 pmi = re.compile("^PMI")
 pmi_name = list(filter(pmi.search, other_files))[0]
 pmi_img.upload_file(other_path + pmi_name)
+
+# 1-6. HYG
+child_page.children.add_new(SubsubheaderBlock, title = 'HYG Stock')
+child_page.children.add_new(TextBlock, title = '부도 위험이 낮아질수록 가격이 오르는 주식상품')
+
+hyg_img = child_page.children.add_new(ImageBlock, width=500)
+hyg_img.upload_file(data_path + "HYG-1month.png")
 
 # 2. 경기
 child_page.children.add_new(HeaderBlock, title = '경기')
@@ -138,5 +146,16 @@ child_page.children.add_new(SubsubheaderBlock, title = '미국 물가 (target: 2
 
 fr_img = child_page.children.add_new(ImageBlock, width=500)
 fr_img.upload_file(data_path + "price.png")
+
+# 3. 기타 투자 지표
+
+# 3-1. Fear & Greed Index
+child_page.children.add_new(SubsubheaderBlock, title = 'Fear & Greed Index')
+child_page.children.add_new(TextBlock, title = '40 이하: 시기상 저렴 & 공포')
+child_page.children.add_new(TextBlock, title = '40 <= x <= 60: 중립 ~ 매수 구간')
+child_page.children.add_new(TextBlock, title = '60 이상: 욕심 과열')
+
+fg_img = child_page.children.add_new(ImageBlock, width=800)
+fg_img.upload_file(other_path + "FG_image.png")
 
 print("UPLOADED! " + now_f)

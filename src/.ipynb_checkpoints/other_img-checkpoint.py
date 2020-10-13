@@ -136,3 +136,20 @@ if __name__ == "__main__":
 	rm_file = save_path + "p0-12.png"
 	os.remove(pdf_which)
 	os.remove(rm_file)
+	
+	# 3. Fear & Greed
+	url = "https://money.cnn.com/data/fear-and-greed/"
+	headers = {'Referer': url,
+			   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
+
+	req = fredREQ(url, headers)
+	req_txt = req.text
+	soup = BeautifulSoup(req_txt, 'html.parser')
+
+	id_url = soup.find_all("div", {"id": "needleChart"})
+
+	style_url = id_url[0]['style']
+	img_url = style_url.split("('", 1)[1].split("')")[0]
+
+	fear_greed_nm = "FG_image" #+ today_str
+	importImgFromURL(save_path, img_url, fear_greed_nm)

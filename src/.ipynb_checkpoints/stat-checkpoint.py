@@ -9,6 +9,7 @@ from dateutil.relativedelta import relativedelta
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import yfinance as yf   
 
 def economy_line_plot(data, month, standard, title, xlab, ylab, save_path, save_name):
 	fig = plt.figure()
@@ -58,6 +59,20 @@ def last_value_stat(data, month):
 	
 	return round(stat1,2)
 
+def draw_yh_stock_price(stock_name, start_date, end_date,
+						save_path, save_name):
+
+	fig = plt.figure()
+	plt.suptitle('ggplot style')
+
+	data = yf.download(stock_name, start_date, end_date) 
+
+	plt.plot(data.index, data.Close)
+
+	fig.suptitle("HYG 1month", fontsize = 20)
+	plt.xlabel("Date", fontsize = 16)
+	plt.ylabel("Stock Price", fontsize = 16)
+	fig.savefig(save_path + save_name)
 
 # main definition
 if __name__ == "__main__":
@@ -65,10 +80,8 @@ if __name__ == "__main__":
 	files = os.listdir(data_dir)
 
 	txt_regex = re.compile('.txt$')
-	png_regex = re.compile('.png$')
 
 	txt_file = list(filter(txt_regex.search, files))
-	png_file = list(filter(png_regex.search, files))
 
 	save_path = os.getcwd() + "/plot/"
 	if os.path.isdir(save_path)  is not True:
@@ -137,7 +150,16 @@ if __name__ == "__main__":
 					 title = "price-1month", xlab = "date", ylab = "value",
 					 save_path = save_path,
 					 save_name = "price")
+	
+	# draw stock price
+	end_date = datetime.now()
+	end_str = end_date.strftime('%Y-%m-%d')
 
+	start_date = end_date - relativedelta(months=1)
+	start_str = start_date.strftime('%Y-%m-%d')
+	
+	draw_yh_stock_price('HYG', start_str, end_str, save_path, "HYG-1month")
+	
 	# save stats
 	stats = [ice_stat1, ice_stat2, ice_stat3, ice_stat4, ted_stat1, ted_stat2, ted_stat3,
 	ls_stat1, ls_stat2, ls_stat3, fund_stat1, fund_stat2, ur_stat1, ur_stat2]

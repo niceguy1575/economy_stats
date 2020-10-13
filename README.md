@@ -16,6 +16,7 @@
 
 ### 활용 패키지 목록
 
+- yfinance
 - pandas
 - requests
 - re
@@ -50,8 +51,10 @@
 
     [https://github.com/jamalex/notion-py](https://github.com/jamalex/notion-py)
 
+5. Fear & Greed Index 
+
+    [https://money.cnn.com/data/fear-and-greed/](https://money.cnn.com/data/fear-and-greed/)
+
 ## 향후 보안사항
 
-1. greed & fear index
-2. 부도위험주[hyg] 반영
-3. 채권관련 index 추가
+1. 채권관련 index 추가
