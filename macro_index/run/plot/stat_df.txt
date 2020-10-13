@@ -1,8 +1,8 @@
 label|stat
-ice|4.97
-ice|-0.05
-ice|-0.18
-ice|0.13
+ice|4.92
+ice|-0.01
+ice|-0.14
+ice|0.09
 ted|0.14
 ted|0.08
 ted|-0.12

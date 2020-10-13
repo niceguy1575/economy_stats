@@ -1,5 +1,8 @@
 #!/bin/bash
 
+eval "$(conda shell.bash hook)"
+conda activate economy
+
 echo "change the auth src"
 chmod 777 ../src
 
@@ -13,3 +16,6 @@ echo "3. make stats"
 python3 ../src/stat.py
 echo "4. upload to notion"
 python3 ../src/notion_upload.py
+
+source /Users/jongwon/opt/anaconda3/etc/profile.d/conda.sh
+conda deactivate
