@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "0. check and install pakcages."
+python3 ../src/check_and_install_packages.py
 echo "1. get data"
 python3 ../src/fred.py
 echo "2. get image"
