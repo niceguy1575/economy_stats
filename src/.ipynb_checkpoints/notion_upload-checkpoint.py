@@ -38,9 +38,12 @@ time.sleep(5)
 child_id = [c.id for c in page.children][-1]
 
 child_page = client.get_block(child_id)
+
+child_page.children.add_new(SubheaderBlock, title = now_f + ' 기준 거시경제 지표 표기')
+child_page.children.add_new(TextBlock, title = ' ')
+
 # 1. 부도위험
 child_page.children.add_new(HeaderBlock, title = '부도위험')
-child_page.children.add_new(TextBlock, title = ' ')
 
 child_page.children.add_new(SubheaderBlock, title = 'ICE')
 # 1-1. ice
