@@ -32,6 +32,8 @@ def draw_analysis_plot(stock_name, start_date, end_date,
 
     fig, ax1 = plt.subplots()
     plt.suptitle('ggplot style')
+    plt.xticks(rotation=45)
+
     ax2 = ax1.twinx()
 
     data = yf.download(stock_name, start_date, end_date)
@@ -41,7 +43,7 @@ def draw_analysis_plot(stock_name, start_date, end_date,
     y2 = data.Volume
 
     ax1.plot(x, y1, 'g-')
-    ax2.plot(x, y2, 'b-')
+    ax2.bar(x, y2)
 
     fig.suptitle(stock_name + ' Chart', fontsize = 20)
 
@@ -97,8 +99,8 @@ def get_stats(stock_name, save_path, tbl_name, plot_name):
 
 	target_price = eps * roe_num
 	
-	stats = [sector, cap, dividends, per, eps, close_price, target_price]
-	lis = ['sector', '시가총액', '배당률', 'PER', 'EPS', '종가', '적정주가']
+	stats = [sector, cap, dividends, per, eps, close_price, roe_num, target_price]
+	lis = ['sector', '시가총액', '배당률', 'PER', 'EPS', '종가', 'ROE', '적정주가']
 
 	stat_df = pd.DataFrame({'label': lis, 'stats': stats})
 	stat_df.to_csv( save_path + tbl_name, sep = "|", index = False)

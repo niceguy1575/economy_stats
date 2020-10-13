@@ -12,6 +12,7 @@ from notion.block import HeaderBlock
 from notion.block import SubheaderBlock
 from notion.block import SubsubheaderBlock
 from notion.block import PageBlock
+from notion.block import BookmarkBlock
 import time
 
 # main definition
@@ -32,48 +33,76 @@ if __name__ == "__main__":
 	
 	##### page contents
 	child_id = [c.id for c in page.children][-1]
-
 	child_page = client.get_block(child_id)
-
 	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
+
+	url1 = ['naver.com', 'www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
+	url2 = ['https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
+	url3 = ['https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
+
+	url_df = pd.DataFrame({'stock_name': stocks, 'url1': url1, 'url2': url2, 'url3': url3})
 
 	# page insert start...
 	for stock in stocks:
 		print(stock)
-		
+
 		tbl_name = stock + '_stats.txt'
 		
 		# 1. read & paste stat_df
 		stat_df = pd.read_csv(save_path + stock + "_stats.txt", sep = "|")
 		stat_value = stat_df.stats.astype(str).values
-		child_page.children.add_new(HeaderBlock, title = stock + ' ' + now_f)
 		
-		child_page.children.add_new(SubheaderBlock, title = "sector")
-		child_page.children.add_new(TextBlock, title = '섹터: ' + stat_value[0])
+		child_page.children.add_new(PageBlock, title=stock)
+
+		grand_child_id = [c.id for c in child_page.children][-1]
+
+		grand_child_page = client.get_block(grand_child_id)
+
+		grand_child_page.children.add_new(HeaderBlock, title = stock + ' ' + now_f)
 		
-		child_page.children.add_new(SubheaderBlock, title = "시가총액")
+		grand_child_page.children.add_new(SubheaderBlock, title = "sector")
+		grand_child_page.children.add_new(TextBlock, title = '섹터: ' + stat_value[0])
+		
+		grand_child_page.children.add_new(SubheaderBlock, title = "시가총액")
 		
 		market_cap = str(round(int(stat_value[1])/100000000, 1))
 		
-		child_page.children.add_new(TextBlock, title = '시가총액: ' + market_cap + "(단위: 억$)")
+		grand_child_page.children.add_new(TextBlock, title = '시가총액: ' + market_cap + "(단위: 억$)")
 		
-		child_page.children.add_new(SubheaderBlock, title = "배당률")
-		child_page.children.add_new(TextBlock, title = '배당률: ' + stat_value[2])
+		grand_child_page.children.add_new(SubheaderBlock, title = "배당률")
+		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + stat_value[2])
 		
-		child_page.children.add_new(SubheaderBlock, title = "PER")
-		child_page.children.add_new(TextBlock, title = 'PER: ' + stat_value[3])
+		grand_child_page.children.add_new(SubheaderBlock, title = "PER")
+		grand_child_page.children.add_new(TextBlock, title = 'PER: ' + stat_value[3])
 		
-		child_page.children.add_new(SubheaderBlock, title = "EPS")
-		child_page.children.add_new(TextBlock, title = 'EPS: ' + stat_value[4])
+		grand_child_page.children.add_new(SubheaderBlock, title = "EPS")
+		grand_child_page.children.add_new(TextBlock, title = 'EPS: ' + stat_value[4])
 		
-		child_page.children.add_new(SubheaderBlock, title = "Stock Price(종가)")
-		child_page.children.add_new(TextBlock, title = 'Stock Price: ' + stat_value[5])
+		grand_child_page.children.add_new(SubheaderBlock, title = "ROE")
+		grand_child_page.children.add_new(TextBlock, title = 'ROE: ' + stat_value[6])
+
+		grand_child_page.children.add_new(SubheaderBlock, title = "Stock Price(종가)")
+		grand_child_page.children.add_new(TextBlock, title = 'Stock Price: ' + stat_value[5])
 		
-		child_page.children.add_new(SubheaderBlock, title = "Target Price(적정주가)")
-		child_page.children.add_new(TextBlock, title = 'Target Price: ' + stat_value[6])
+		grand_child_page.children.add_new(SubheaderBlock, title = "Target Price(적정주가)")
+		grand_child_page.children.add_new(TextBlock, title = 'Target Price: ' + stat_value[7])
 
 		# 2. add image
-		stock_image = child_page.children.add_new(ImageBlock, width=650)
+		stock_image = grand_child_page.children.add_new(ImageBlock, width=650)
 		stock_image.upload_file(save_path + stock + "_analysis.png")
+
+		# 3. 유관 페이지 url
+		url1 = url_df.loc[url_df.stock_name == stock].url1
+		url2 = url_df.loc[url_df.stock_name == stock].url2
+		url3 = url_df.loc[url_df.stock_name == stock].url3
 		
+		grand_child_page.children.add_new(SubheaderBlock, title = "URL1")
+		grand_child_page.children.add_new(BookmarkBlock, link = url1)
+
+		grand_child_page.children.add_new(SubheaderBlock, title = "URL2")
+		grand_child_page.children.add_new(BookmarkBlock, link = url2)
+
+		grand_child_page.children.add_new(SubheaderBlock, title = "URL3")
+		grand_child_page.children.add_new(BookmarkBlock, link = url3)
+
 	print("UPLOADED! " + now_f)
