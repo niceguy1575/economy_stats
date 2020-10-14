@@ -31,8 +31,7 @@
 ## 활용 패키지 목록 및 참고
 
 ~~ python
-# packages
-['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMuPDF', 'notion', 'bs4', 'datetime', 'dateutil']
+packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMuPDF', 'notion', 'bs4', 'datetime', 'dateutil']
 ~~
 
 💁‍♀️ 페이스북 노션 홈페이지 홍보: [http://asq.kr/79zMEd5c0ri2](http://asq.kr/79zMEd5c0ri2)
@@ -43,19 +42,24 @@
 ## 참고 site
 
 1. FRED
+
     [https://fred.stlouisfed.org/](https://fred.stlouisfed.org/)
     [https://fred.stlouisfed.org/docs/api/fred/](https://fred.stlouisfed.org/docs/api/fred/)
 
 2. US PMI
+
     [https://tradingeconomics.com/united-states/business-confidence](https://tradingeconomics.com/united-states/business-confidence)
 
 3. S&P 500 12 fwd eps
+
     [https://insight.factset.com/sp-500-forward-p/e-ratio-rises-above-20.0-as-eps-estimates-continue-to-fall](https://insight.factset.com/sp-500-forward-p/e-ratio-rises-above-20.0-as-eps-estimates-continue-to-fall)
 
 4. notion py
+
     [https://github.com/jamalex/notion-py](https://github.com/jamalex/notion-py)
 
 5. Fear & Greed Index 
+
     [https://money.cnn.com/data/fear-and-greed/](https://money.cnn.com/data/fear-and-greed/)
 
 ## 향후 보안사항
