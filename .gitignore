@@ -6,3 +6,4 @@
 .ipynb_check_points
 *.ipynb
 *.swp
+.Rhistory
