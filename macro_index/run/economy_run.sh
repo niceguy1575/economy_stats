@@ -17,5 +17,4 @@ python3 ../src/stat.py
 echo "4. upload to notion"
 python3 ../src/notion_upload.py
 
-source /Users/jongwon/opt/anaconda3/etc/profile.d/conda.sh
 conda deactivate
