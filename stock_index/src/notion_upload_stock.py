@@ -36,9 +36,15 @@ if __name__ == "__main__":
 	child_page = client.get_block(child_id)
 	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
 
-	url1 = ['naver.com', 'www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
-	url2 = ['https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
-	url3 = ['https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com', 'https://www.naver.com']
+	url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
+			'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/company/',
+			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/',
+			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/']
+	url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
+		'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/financials/',
+		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/',
+		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/']
+	url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
 	url_df = pd.DataFrame({'stock_name': stocks, 'url1': url1, 'url2': url2, 'url3': url3})
 
@@ -69,23 +75,30 @@ if __name__ == "__main__":
 		
 		grand_child_page.children.add_new(TextBlock, title = '시가총액: ' + market_cap + "(단위: 억$)")
 		
+		dividend = str(round(stat_value[2], 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "배당률")
-		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + stat_value[2])
+		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + dividend)
+		
+		per = str(round(stat_value[3], 2) )
 		
 		grand_child_page.children.add_new(SubheaderBlock, title = "PER")
-		grand_child_page.children.add_new(TextBlock, title = 'PER: ' + stat_value[3])
+		grand_child_page.children.add_new(TextBlock, title = 'PER: ' + per)
 		
+		eps = str(round(stat_value[4], 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "EPS")
-		grand_child_page.children.add_new(TextBlock, title = 'EPS: ' + stat_value[4])
+		grand_child_page.children.add_new(TextBlock, title = 'EPS: ' + eps)
 		
+		roe = str(round(stat_value[6], 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "ROE")
-		grand_child_page.children.add_new(TextBlock, title = 'ROE: ' + stat_value[6])
+		grand_child_page.children.add_new(TextBlock, title = 'ROE: ' + roe)
 
+		price = str(round(stat_value[5], 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "Stock Price(종가)")
-		grand_child_page.children.add_new(TextBlock, title = 'Stock Price: ' + stat_value[5])
+		grand_child_page.children.add_new(TextBlock, title = 'Stock Price: ' + price)
 		
+		target = str(round(stat_value[7], 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "Target Price(적정주가)")
-		grand_child_page.children.add_new(TextBlock, title = 'Target Price: ' + stat_value[7])
+		grand_child_page.children.add_new(TextBlock, title = 'Target Price: ' + target)
 
 		# 2. add image
 		stock_image = grand_child_page.children.add_new(ImageBlock, width=650)
@@ -97,12 +110,15 @@ if __name__ == "__main__":
 		url3 = url_df.loc[url_df.stock_name == stock].url3
 		
 		grand_child_page.children.add_new(SubheaderBlock, title = "URL1")
-		grand_child_page.children.add_new(BookmarkBlock, link = url1)
+		url1_block = grand_child_page.children.add_new(BookmarkBlock)
+		url1_block.set_source_url(url1)
 
 		grand_child_page.children.add_new(SubheaderBlock, title = "URL2")
-		grand_child_page.children.add_new(BookmarkBlock, link = url2)
+		url2_block = grand_child_page.children.add_new(BookmarkBlock)
+		url2_block.set_source_url(url2)
 
 		grand_child_page.children.add_new(SubheaderBlock, title = "URL3")
-		grand_child_page.children.add_new(BookmarkBlock, link = url3)
+		url3_block = grand_child_page.children.add_new(BookmarkBlock)
+		url3_block.set_source_url(url3)
 
 	print("UPLOADED! " + now_f)

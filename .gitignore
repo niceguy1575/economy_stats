@@ -1,0 +1,7 @@
+## niceguy1575 Ignore File ##
+
+*.txt
+*.png
+.DS_Store
+.ipynb_check_points
+.ipynb
