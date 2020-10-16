@@ -3,7 +3,7 @@
 # setup notion
 import os
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from notion.client import NotionClient
 from notion.block import TextBlock
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/564d7bec3a784e6894731300389bfefc")
 
-	now = datetime.now() + datetime.timedelta(days=1)
+	now = datetime.now() + timedelta(days=1)
 	now_f = now.strftime("%Y-%m-%d")
 	page.children.add_new(PageBlock, title=now_f)
 
