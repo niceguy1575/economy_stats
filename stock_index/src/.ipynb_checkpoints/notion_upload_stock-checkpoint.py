@@ -23,7 +23,7 @@ if __name__ == "__main__":
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/564d7bec3a784e6894731300389bfefc")
 
-	now = datetime.now()
+	now = datetime.now() + datetime.timedelta(days=1)
 	now_f = now.strftime("%Y-%m-%d")
 	page.children.add_new(PageBlock, title=now_f)
 
@@ -41,8 +41,8 @@ if __name__ == "__main__":
 			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/']
 	url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
 		'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/financials/',
-		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/',
-		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/']
+		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/',
+		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/']
 	url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
 	url_df = pd.DataFrame({'stock_name': stocks, 'url1': url1, 'url2': url2, 'url3': url3})

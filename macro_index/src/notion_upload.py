@@ -23,7 +23,7 @@ if __name__ == "__main__":
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/07cae222fb624bc5b402e96c1c86ed70")
 
-	now = datetime.now()
+	now = datetime.now() + datetime.timedelta(days=1)
 	now_f = now.strftime("%Y-%m-%d")
 	page.children.add_new(PageBlock, title=now_f)
 
