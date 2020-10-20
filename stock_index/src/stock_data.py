@@ -5,7 +5,7 @@ import yfinance as yf
 from bs4 import BeautifulSoup
 import re
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import matplotlib
 import matplotlib.pyplot as plt
@@ -116,7 +116,7 @@ def get_stats(stock_name, save_path, tbl_name, plot_name):
 	########## do analyze chart data
 
 	# draw stock price
-	end_date = datetime.now()
+	end_date = datetime.now() + timedelta(days = 1)
 	end_str = end_date.strftime('%Y-%m-%d')
 
 	start_date = end_date - relativedelta(months=3)

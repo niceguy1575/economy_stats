@@ -4,7 +4,7 @@
 import os
 import pandas as pd
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import matplotlib
 import matplotlib.pyplot as plt
@@ -152,7 +152,7 @@ if __name__ == "__main__":
 					 save_name = "price")
 	
 	# draw stock price
-	end_date = datetime.now()
+	end_date = datetime.now() + timedelta(days = 1)
 	end_str = end_date.strftime('%Y-%m-%d')
 
 	start_date = end_date - relativedelta(months=1)
