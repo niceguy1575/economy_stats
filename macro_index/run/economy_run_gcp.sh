@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "change the auth src"
-chmod 777 /root/economy_stats_macro_index/src
+chmod 777 /root/economy_stats/macro_index/src
 echo "0. check and install pakcages."
 python3 /root/economy_stats/macro_index/src/check_and_install_packages.py
 echo "1. get data"
