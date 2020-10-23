@@ -60,7 +60,7 @@ def draw_analysis_plot(stock_name, start_date, end_date,
     fig.savefig(save_path + save_name)
 
 
-def get_stats(stock_name, save_path, tbl_name, plot_name):
+def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 		##### 1. get statistics
 	aapl = yf.Ticker(stock_name)
 
@@ -111,9 +111,32 @@ def get_stats(stock_name, save_path, tbl_name, plot_name):
 
 	stat_df = pd.DataFrame({'label': lis, 'stats': stats})
 	stat_df.to_csv( save_path + tbl_name, sep = "|", index = False)
-	print("1. stat")
-
 	########## do analyze chart data
+
+	# draw stock price
+	end_date = datetime.now()
+	end_str = end_date.strftime('%Y-%m-%d')
+
+	start_date = end_date - relativedelta(months=3)
+	start_str = start_date.strftime('%Y-%m-%d')
+
+	draw_analysis_plot(stock_name, start_str, end_str, save_path, plot_name)
+
+def get_stats_etf(stock_name, save_path, tbl_name, plot_name):
+	##### 1. get statistics
+	qqq = yf.Ticker(stock_name)
+
+	qqq_info = qqq.info
+
+	close_price = qqq_info['previousClose']
+	volume = qqq_info['volume']
+	dividends = qqq_info['dividendRate']
+
+	stats = [close_price, volume, dividends]
+	lis = ['종가', '거래량', '배당률']
+
+	stat_df = pd.DataFrame({'label': lis, 'stats': stats})
+	stat_df.to_csv( save_path + tbl_name, sep = "|", index = False)
 
 	# draw stock price
 	end_date = datetime.now() + timedelta(days = 1)
@@ -124,9 +147,6 @@ def get_stats(stock_name, save_path, tbl_name, plot_name):
 
 	draw_analysis_plot(stock_name, start_str, end_str, save_path, plot_name)
 
-	print("2. plot")
-
-
 # main definition
 if __name__ == "__main__":
 
@@ -134,7 +154,8 @@ if __name__ == "__main__":
 
 	if os.path.isdir(save_path)  is not True:
 			os.mkdir(save_path)
-
+	
+	### STOCK
 	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
 
 	for stock in stocks:
@@ -142,4 +163,14 @@ if __name__ == "__main__":
 		plot_name = stock + '_analysis'
 		tbl_name = stock + '_stats.txt'
 
-		get_stats(stock, save_path, tbl_name, plot_name)
+		get_stats_stock(stock, save_path, tbl_name, plot_name)
+	
+	### ETF
+	etfs = ['QQQ', 'SPY', 'VIG']
+	for etf in etfs:
+		print(etf)
+		plot_name = etf + '_analysis'
+		tbl_name = etf + '_stats.txt'
+
+		get_stats_etf(etf, save_path, tbl_name, plot_name)
+		

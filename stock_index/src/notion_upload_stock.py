@@ -29,25 +29,31 @@ if __name__ == "__main__":
 
 	# data load
 	save_path = os.getcwd() + "/save/"
-	
+	url_path = os.getcwd() + ""
 	##### page contents
 	child_id = [c.id for c in page.children][-1]
 	child_page = client.get_block(child_id)
 	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
 
-	url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
+	stock_url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
 			'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/company/',
 			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/',
 			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/']
-	url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
+	stock_url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
 		'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/financials/',
 		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/',
 		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/']
-	url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
+	stock_url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
-	url_df = pd.DataFrame({'stock_name': stocks, 'url1': url1, 'url2': url2, 'url3': url3})
+	stock_url_df = pd.DataFrame({'stock_name': stocks, 'url1': stock_url1, 'url2': stock_url2, 'url3': stock_url3})
+	
+	etfs = ['QQQ', 'SPY', 'VIG']
 
-	# page insert start...
+	etf_url1 = ['https://etfdb.com/etf/' + etf + '/#etf-ticker-profile' for etf in etfs]
+	etf_url2 = ['https://www.etf.com/' + etf + '#overview' for etf in etfs]
+	etf_url_df = pd.DataFrame({'etf_name': etfs, 'url1': etf_url1, 'url2': etf_url2})
+
+	#### stock part
 	for stock in stocks:
 		print(stock)
 
@@ -103,9 +109,9 @@ if __name__ == "__main__":
 		stock_image.upload_file(save_path + stock + "_analysis.png")
 
 		# 3. 유관 페이지 url
-		url1 = url_df.loc[url_df.stock_name == stock].url1.values[0]
-		url2 = url_df.loc[url_df.stock_name == stock].url2.values[0]
-		url3 = url_df.loc[url_df.stock_name == stock].url3.values[0]
+		url1 = stock_url_df.loc[stock_url_df.stock_name == stock].url1.values[0]
+		url2 = stock_url_df.loc[stock_url_df.stock_name == stock].url2.values[0]
+		url3 = stock_url_df.loc[stock_url_df.stock_name == stock].url3.values[0]
 		
 		grand_child_page.children.add_new(SubheaderBlock, title = "MarketScreener - company")
 		url1_block = grand_child_page.children.add_new(BookmarkBlock)
@@ -119,5 +125,51 @@ if __name__ == "__main__":
 		url3_block = grand_child_page.children.add_new(BookmarkBlock)
 		url3_block.set_new_link(url3)
 		
+	print("STOCK UPLOADED! " + now_f)
+	#### etf part
+	for etf in etfs:
+		print(etf)
+
+		tbl_name = etf + '_stats.txt'
 		
-	print("UPLOADED! " + now_f)
+		# 1. read & paste stat_df
+		stat_df = pd.read_csv(save_path + etf + "_stats.txt", sep = "|")
+		stat_value = stat_df.stats.astype(str).values
+		
+		child_page.children.add_new(PageBlock, title=etf)
+
+		grand_child_id = [c.id for c in child_page.children][-1]
+
+		grand_child_page = client.get_block(grand_child_id)
+
+		grand_child_page.children.add_new(HeaderBlock, title = etf + ' ' + now_f)
+		
+		price = str(round(float(stat_value[0]), 2) )
+		grand_child_page.children.add_new(SubheaderBlock, title = "etf Price(종가)")
+		grand_child_page.children.add_new(TextBlock, title = 'etf Price: ' + price)
+		
+		volume = str(round(float(stat_value[1]), 2) )
+		grand_child_page.children.add_new(SubheaderBlock, title = "Volume (거래량)")
+		grand_child_page.children.add_new(TextBlock, title = 'Volume: ' + volume)
+		
+		dividend = stat_value[2]
+		grand_child_page.children.add_new(SubheaderBlock, title = "배당률")
+		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + dividend)
+		
+		# 2. add image
+		etf_image = grand_child_page.children.add_new(ImageBlock, width=650)
+		etf_image.upload_file(save_path + etf + "_analysis.png")
+
+		# 3. 유관 페이지 url
+		url1 = etf_url_df.loc[etf_url_df.etf_name == etf].url1.values[0]
+		url2 = etf_url_df.loc[etf_url_df.etf_name == etf].url2.values[0]
+		
+		grand_child_page.children.add_new(SubheaderBlock, title = "MarketScreener - company")
+		url1_block = grand_child_page.children.add_new(BookmarkBlock)
+		url1_block.set_new_link(url1)
+
+		grand_child_page.children.add_new(SubheaderBlock, title = "MarketScreener - financials")
+		url2_block = grand_child_page.children.add_new(BookmarkBlock)
+		url2_block.set_new_link(url2)
+		
+	print("ETF UPLOADED! " + now_f)
