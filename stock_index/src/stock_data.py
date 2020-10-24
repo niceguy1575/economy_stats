@@ -166,7 +166,7 @@ if __name__ == "__main__":
 		get_stats_stock(stock, save_path, tbl_name, plot_name)
 	
 	### ETF
-	etfs = ['QQQ', 'SPY', 'VIG']
+	etfs = ['QQQ', 'IVV', 'SPY', 'VIG']
 	for etf in etfs:
 		print(etf)
 		plot_name = etf + '_analysis'

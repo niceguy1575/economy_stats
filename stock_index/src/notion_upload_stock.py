@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
 	stock_url_df = pd.DataFrame({'stock_name': stocks, 'url1': stock_url1, 'url2': stock_url2, 'url3': stock_url3})
 	
-	etfs = ['QQQ', 'SPY', 'VIG']
+	etfs = ['QQQ','IVV', 'SPY', 'VIG']
 
 	etf_url1 = ['https://etfdb.com/etf/' + etf + '/#etf-ticker-profile' for etf in etfs]
 	etf_url2 = ['https://www.etf.com/' + etf + '#overview' for etf in etfs]
