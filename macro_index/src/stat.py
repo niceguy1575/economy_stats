@@ -4,7 +4,7 @@
 import os
 import pandas as pd
 import re
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import matplotlib
 import matplotlib.pyplot as plt
@@ -74,6 +74,61 @@ def draw_yh_stock_price(stock_name, start_date, end_date,
 	plt.ylabel("Stock Price", fontsize = 16)
 	fig.savefig(save_path + save_name)
 
+def draw_plot_two_axis(data1, data2, month,
+					   save_path, save_name):
+
+	# data 1
+	newest_date =  data1.date.tail(n=1).values[0]
+	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
+
+	three_month1 = newest_datetime - relativedelta(months = 1)
+	three_month_f1 = three_month1.strftime("%Y-%m-%d")
+
+	try:
+		three_month_data1 = data1.loc[np.where(data1.date == three_month_f1)[0][0]:,:]
+	except:
+		three_month_data1 = data1.tail(n = month*30)
+
+	three_month_data1.date =  pd.to_datetime(three_month_data1.date, format='%Y-%m-%d')
+
+	# data 2
+	newest_date =  data2.date.tail(n=1).values[0]
+	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
+
+	three_month2 = newest_datetime - relativedelta(months = 1)
+	three_month_f2 = three_month2.strftime("%Y-%m-%d")
+
+	try:
+		three_month_data2 = data2.loc[np.where(data2.date == three_month_f2)[0][0]:,:]
+	except:
+		three_month_data2 = data2.tail(n = month*30)
+
+	three_month_data2.date =  pd.to_datetime(three_month_data2.date, format='%Y-%m-%d')
+	
+	########## figure
+
+	fig, ax1 = plt.subplots()
+	plt.xticks(rotation=45)
+
+	ax2 = ax1.twinx()
+
+	x = three_month_data1.date.astype(str)
+	y1 = three_month_data1.value
+	y2 = three_month_data2.value
+
+	ax1.plot(x, y1, 'g-')
+	ax2.plot(x, y2)
+
+	fig.suptitle('10 & 20 maturity rate {} month'.format(1), fontsize = 20)
+	fig.autofmt_xdate(rotation=45)
+
+	ax1.set_xlabel('Date')
+	ax1.set_ylabel('10 year', color='g', fontsize = 12)
+	ax2.set_ylabel('20 year', color='b', fontsize = 12) 
+	
+	fig.savefig(save_path + save_name)
+	
+	
 # main definition
 if __name__ == "__main__":
 	data_dir = os.getcwd() + "/data/"
@@ -144,15 +199,22 @@ if __name__ == "__main__":
 			economy_line_plot(data, month = 6, standard = 0,
 					 title = "unrate-6month", xlab = "date", ylab = "value",
 					 save_path = save_path,
-					 save_name = "unrate")
-		else:
+					 save_name = "unrate")			
+		elif txt == "T10YIE":
 			economy_line_plot(data, month = 1, standard = 2,
 					 title = "price-1month", xlab = "date", ylab = "value",
 					 save_path = save_path,
 					 save_name = "price")
+		else:
+			print("nothing to do on {}".format(txt))
+	
+	# draw maturity plot
+	data1 = pd.read_csv(data_dir + "DGS10.txt", sep = "|")
+	data2 = pd.read_csv(data_dir + "DGS20.txt", sep = "|")
+	draw_plot_two_axis(data1, data2, 1, save_path = save_path, save_name = "long_maturity-1month")
 	
 	# draw stock price
-	end_date = datetime.now() + timedelta(days = 1)
+	end_date = datetime.now()
 	end_str = end_date.strftime('%Y-%m-%d')
 
 	start_date = end_date - relativedelta(months=1)

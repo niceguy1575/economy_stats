@@ -33,16 +33,18 @@ if __name__ == "__main__":
 	##### page contents
 	child_id = [c.id for c in page.children][-1]
 	child_page = client.get_block(child_id)
-	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
+	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM', 'SBUX']
 
 	stock_url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
 			'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/company/',
 			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/',
-			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/']
+			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/',
+'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/company/']
 	stock_url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
 		'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/financials/',
 		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/',
-		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/']
+		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/',
+'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/financials/']
 	stock_url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
 	stock_url_df = pd.DataFrame({'stock_name': stocks, 'url1': stock_url1, 'url2': stock_url2, 'url3': stock_url3})

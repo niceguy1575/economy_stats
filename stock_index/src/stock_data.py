@@ -102,7 +102,13 @@ def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 	target_num = react_num + 4
 
 	roe = soup.find_all("td", {'data-reactid': target_num})
-	roe_num = float(re.sub('%', '', roe[0].text))
+    
+	roe_text = roe[0].text
+    
+	if roe_text == "N/A":
+		roe_num = 0
+	else:
+		roe_num = float(re.sub('%', '', roe_text))
 
 	target_price = eps * roe_num
 	
@@ -114,7 +120,7 @@ def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 	########## do analyze chart data
 
 	# draw stock price
-	end_date = datetime.now()
+	end_date = datetime.now() + timedelta(days = 1)
 	end_str = end_date.strftime('%Y-%m-%d')
 
 	start_date = end_date - relativedelta(months=3)
@@ -156,7 +162,7 @@ if __name__ == "__main__":
 			os.mkdir(save_path)
 	
 	### STOCK
-	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM']
+	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM', 'SBUX']
 
 	for stock in stocks:
 		print(stock)
@@ -173,4 +179,3 @@ if __name__ == "__main__":
 		tbl_name = etf + '_stats.txt'
 
 		get_stats_etf(etf, save_path, tbl_name, plot_name)
-		

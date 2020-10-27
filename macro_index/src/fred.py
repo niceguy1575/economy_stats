@@ -50,7 +50,7 @@ def fredURL(api_key, series):
 # main definition
 if __name__ == "__main__":
 	api_keys = ["08e04acc750c26678182a33fe90050b4", "2cf918e4dfe6d347d99e73e75930f4a3","752db7a401cae5103d2f5493abd8e5d7", "45a87a079750aca5f50296985543695d"]
-	series_list = ["T10YIE", "T10Y2Y", "UNRATE", "FEDFUNDS", "USD12MD156N", "USD1WKD156N","BAMLH0A0HYM2", "TEDRATE"]
+	series_list = ["T10YIE", "T10Y2Y", "UNRATE", "FEDFUNDS", "USD12MD156N", "USD1WKD156N","BAMLH0A0HYM2", "TEDRATE", "DGS10", "DGS20"]
 	
 	api_key = api_keys[0]
 	save_path = os.getcwd() + "/data"

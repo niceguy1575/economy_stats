@@ -121,6 +121,11 @@ if __name__ == "__main__":
 	t102y_img = child_page.children.add_new(ImageBlock, width=500)
 	t102y_img.upload_file(data_path + "LS.png")
 
+	# 2-35. 장기금리 추이
+	child_page.children.add_new(SubsubheaderBlock, title = '최근 1개월 10 / 20년 장기금리 추이')
+	long_mat_img = child_page.children.add_new(ImageBlock, width=500)
+	long_mat_img.upload_file(data_path + "long_maturity-1month.png")
+	
 	# 2-4. 미국 기준 금리
 	child_page.children.add_new(SubheaderBlock, title = '기준금리')
 	fund = data.loc[data.label == 'fund'].stat.astype(str).values
