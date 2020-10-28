@@ -77,6 +77,15 @@ def draw_yh_stock_price(stock_name, start_date, end_date,
 def draw_plot_two_axis(data1, data2, month,
 					   save_path, save_name):
 
+	# data type change
+	data1.value = data1.value.replace(".", None)
+	data1 = data1.loc[data1.value != ".",:]
+	data1.value = data1.value.astype(float)
+	
+	data2.value = data2.value.replace(".", None)
+	data2 = data2.loc[data2.value != ".",:]
+	data2.value = data2.value.astype(float)
+
 	# data 1
 	newest_date =  data1.date.tail(n=1).values[0]
 	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
