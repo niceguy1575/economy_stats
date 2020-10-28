@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
 	child_page.children.add_new(SubheaderBlock, title = 'ICE')
 	# 1-1. ice
-	ice_value = data.loc[data.label == 'ice'].stat.astype(str).values
+	ice_value = data.loc[data.label == 'ice'].copy().stat.astype(str).values
 
 	child_page.children.add_new(TextBlock, title = '부도위험 최신값: ' + ice_value[0])
 	child_page.children.add_new(TextBlock, title = '부도위험 전월대비 증가율: ' + ice_value[1] + "%")
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 	#1-3. ted
 	child_page.children.add_new(SubheaderBlock, title = 'TED')
 
-	ted_value = data.loc[data.label == 'ted'].stat.astype(str).values
+	ted_value = data.loc[data.label == 'ted'].copy().stat.astype(str).values
 
 	child_page.children.add_new(TextBlock, title = 'TED RATE 최신값: ' + ted_value[0])
 	child_page.children.add_new(TextBlock, title = 'TED RATE 전월대비 증가율: ' + ted_value[1] + "%")
@@ -109,7 +109,7 @@ if __name__ == "__main__":
 	# 2-2. 장단기금리차
 	child_page.children.add_new(SubheaderBlock, title = '장단기 금리차')
 
-	t102y = data.loc[data.label == 'ls'].stat.astype(str).values
+	t102y = data.loc[data.label == 'ls'].copy().stat.astype(str).values
 
 	child_page.children.add_new(TextBlock, title = '장단기금리차 최신값: ' + t102y[0])
 	child_page.children.add_new(TextBlock, title = '장단기금리차 전월대비 증가율: ' + t102y[1] + "%")

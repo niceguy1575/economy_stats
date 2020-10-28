@@ -15,16 +15,16 @@ def economy_line_plot(data, month, standard, title, xlab, ylab, save_path, save_
 	fig = plt.figure()
 	plt.suptitle('ggplot style')
 	
-	newest_date =  data.date.tail(n=1).values[0]
+	newest_date =  data.date.tail(n=1).copy().values[0]
 	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
 	
 	three_month = newest_datetime - relativedelta(months = month)
 	three_month_f = three_month.strftime("%Y-%m-%d")
 
 	try:
-		three_month_data = data.loc[np.where(data.date == three_month_f)[0][0]:,:]
+		three_month_data = data.loc[np.where(data.date == three_month_f)[0][0]:,:].copy()
 	except:
-		three_month_data = data.tail(n = month*30)
+		three_month_data = data.tail(n = month*30).copy()
 
 	three_month_data.date =  pd.to_datetime(three_month_data.date, format='%Y-%m-%d')
 
@@ -37,23 +37,23 @@ def economy_line_plot(data, month, standard, title, xlab, ylab, save_path, save_
 	fig.savefig(save_path + save_name)
 	
 def get_newest_stat(data):
-	newest_value = data.value.tail(n=1).values[0]
+	newest_value = data.value.tail(n=1).copy().values[0]
 	
 	return newest_value
 
 def last_value_stat(data, month):
-	newest_date =  data.date.tail(n=1).values[0]
+	newest_date =  data.date.tail(n=1).copy().values[0]
 	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
-	newest_value = data.value.tail(n=1).values[0]
+	newest_value = data.value.tail(n=1).copy().values[0]
 
 	# last month
 	last_month = newest_datetime - relativedelta(months = month)
 	last_month_f = last_month.strftime("%Y-%m-%d")
 
 	try: 
-		last_month_value = data.loc[data.date == last_month_f,:].value.values[0]
+		last_month_value = data.loc[data.date == last_month_f,:].copy().value.values[0]
 	except:
-		last_month_value = data.tail(n = month*30).value.values[0]
+		last_month_value = data.tail(n = month*30).copy().value.values[0]
 
 	stat1 = (newest_value - last_month_value) / last_month_value
 	
@@ -76,41 +76,41 @@ def draw_yh_stock_price(stock_name, start_date, end_date,
 
 def draw_plot_two_axis(data1, data2, month,
 					   save_path, save_name):
-
+	
 	# data type change
 	data1.value = data1.value.replace(".", None)
-	data1 = data1.loc[data1.value != ".",:]
+	data1 = data1.loc[data1.value != ".",:].copy()
 	data1.value = data1.value.astype(float)
 	
 	data2.value = data2.value.replace(".", None)
-	data2 = data2.loc[data2.value != ".",:]
+	data2 = data2.loc[data2.value != ".",:].copy()
 	data2.value = data2.value.astype(float)
-
+	
 	# data 1
-	newest_date =  data1.date.tail(n=1).values[0]
+	newest_date =  data1.date.tail(n=1).copy().values[0]
 	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
 
 	three_month1 = newest_datetime - relativedelta(months = 1)
 	three_month_f1 = three_month1.strftime("%Y-%m-%d")
 
 	try:
-		three_month_data1 = data1.loc[np.where(data1.date == three_month_f1)[0][0]:,:]
+		three_month_data1 = data1.loc[np.where(data1.date == three_month_f1)[0][0]:,:].copy()
 	except:
-		three_month_data1 = data1.tail(n = month*30)
+		three_month_data1 = data1.tail(n = month*30).copy()
 
 	three_month_data1.date =  pd.to_datetime(three_month_data1.date, format='%Y-%m-%d')
 
 	# data 2
-	newest_date =  data2.date.tail(n=1).values[0]
+	newest_date =  data2.date.tail(n=1).copy().values[0]
 	newest_datetime = datetime.strptime(newest_date, "%Y-%m-%d").date()
 
 	three_month2 = newest_datetime - relativedelta(months = 1)
 	three_month_f2 = three_month2.strftime("%Y-%m-%d")
 
 	try:
-		three_month_data2 = data2.loc[np.where(data2.date == three_month_f2)[0][0]:,:]
+		three_month_data2 = data2.loc[np.where(data2.date == three_month_f2)[0][0]:,:].copy()
 	except:
-		three_month_data2 = data2.tail(n = month*30)
+		three_month_data2 = data2.tail(n = month*30).copy()
 
 	three_month_data2.date =  pd.to_datetime(three_month_data2.date, format='%Y-%m-%d')
 	
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
 		# data type change
 		data.value = data.value.replace(".", None)
-		data = data.loc[data.value != ".",:]
+		data = data.loc[data.value != ".",:].copy()
 		data.value = data.value.astype(float)
 		
 		# 파일별 콘텐츠 생산

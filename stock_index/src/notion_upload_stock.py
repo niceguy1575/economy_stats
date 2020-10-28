@@ -111,9 +111,9 @@ if __name__ == "__main__":
 		stock_image.upload_file(save_path + stock + "_analysis.png")
 
 		# 3. 유관 페이지 url
-		url1 = stock_url_df.loc[stock_url_df.stock_name == stock].url1.values[0]
-		url2 = stock_url_df.loc[stock_url_df.stock_name == stock].url2.values[0]
-		url3 = stock_url_df.loc[stock_url_df.stock_name == stock].url3.values[0]
+		url1 = stock_url_df.loc[stock_url_df.stock_name == stock].copy().url1.values[0]
+		url2 = stock_url_df.loc[stock_url_df.stock_name == stock].copy().url2.values[0]
+		url3 = stock_url_df.loc[stock_url_df.stock_name == stock].copy().url3.values[0]
 		
 		grand_child_page.children.add_new(SubheaderBlock, title = "MarketScreener - company")
 		url1_block = grand_child_page.children.add_new(BookmarkBlock)
@@ -163,8 +163,8 @@ if __name__ == "__main__":
 		etf_image.upload_file(save_path + etf + "_analysis.png")
 
 		# 3. 유관 페이지 url
-		url1 = etf_url_df.loc[etf_url_df.etf_name == etf].url1.values[0]
-		url2 = etf_url_df.loc[etf_url_df.etf_name == etf].url2.values[0]
+		url1 = etf_url_df.loc[etf_url_df.etf_name == etf].copy().url1.values[0]
+		url2 = etf_url_df.loc[etf_url_df.etf_name == etf].copy().url2.values[0]
 		
 		grand_child_page.children.add_new(SubheaderBlock, title = "MarketScreener - company")
 		url1_block = grand_child_page.children.add_new(BookmarkBlock)
