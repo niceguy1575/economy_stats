@@ -14,5 +14,5 @@ if __name__ == "__main__":
 	packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMuPDF', 'notion', 'bs4', 'datetime', 'dateutil']
 
 	for p in packages:
-		print(p)
+		#print(p)
 		import_or_install(p)

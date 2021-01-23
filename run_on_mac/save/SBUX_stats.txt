@@ -1,0 +1,9 @@
+label|stats
+sector|Consumer Cyclical
+시가총액|121959170048
+배당률|1.8
+PER|131.53165
+EPS|0.79
+종가|104.58
+ROE|0
+적정주가|0.0

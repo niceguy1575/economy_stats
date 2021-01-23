@@ -1,0 +1,9 @@
+label|stats
+sector|Communication Services
+시가총액|1067387781120
+배당률|
+PER|34.447155
+EPS|45.492
+종가|1564.59
+ROE|15.79
+적정주가|718.31868

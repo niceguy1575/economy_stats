@@ -1,0 +1,15 @@
+label|stat
+ice|3.65
+ice|-0.13
+ice|-0.26
+ice|0.05
+ted|0.13
+ted|-0.13
+ted|0.18
+ls|0.97
+ls|0.21
+ls|0.37
+fund|0.09
+fund|0.0
+ur|6.7
+ur|-0.03

@@ -209,7 +209,7 @@ if __name__ == "__main__":
 					 title = "unrate-6month", xlab = "date", ylab = "value",
 					 save_path = save_path,
 					 save_name = "unrate")			
-		elif txt == "T10YIE":
+		elif txt == "T10YIE.txt":
 			economy_line_plot(data, month = 1, standard = 2,
 					 title = "price-1month", xlab = "date", ylab = "value",
 					 save_path = save_path,

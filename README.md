@@ -30,9 +30,15 @@
 예시: https://www.notion.so/niceguy1575/2020-10-13-a16f8fe1d31e4ba9a68468cb9816f25b
 
 ### 실행방법
+~~~
+# on command
 1. git clone
 2. stock_index/run
 3. bash 명령어 실행: **./stock_run.sh**
+
+# click in mac
+1. 더블클릭: ./run_on_mac/0.0.run_all.command
+~~~
 
 ## 활용 패키지 목록 및 참고
 
@@ -69,7 +75,15 @@ packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMu
 
     [https://money.cnn.com/data/fear-and-greed/](https://money.cnn.com/data/fear-and-greed/)
 
+## 수정사항
+
+21.01.23
+~~~
+1. gcp 환경에서 mac local환경으로 이전
+2. 더블클릭으로 실행할 수 있도록 수정
+3. 데이터 수집 url 수정 및 수집 주식 범위 변경
+~~~
+
+
 ## 향후 보안사항
-1. 채권관련 index 추가
-2. 개별주식 연동 사이트 자동화
-3. 개별주식 주식별 모듈화
+1. 주식 관련 알람

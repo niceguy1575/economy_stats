@@ -19,7 +19,7 @@ import time
 if __name__ == "__main__":
 
 	# get token
-	niceguy_token = "69c9a31ea3fd3455aa679a38be6b4ab92faee8ee049caf00875cbc25751e02738c74c243f7c6bffe60362b826a7a3ff847b2d1453b09d27ced4ea42ff8517efc97e7e14eed49c68c4a0e4b3a0aa1"
+	niceguy_token = "ed06a3b886caad4a1cb7c8b5aad08d016ba6efe6b60223a686dbcc900ed147043b30c130a0eb5197e6fb3cb4ba113bc03e532d6ca23527d92ca43b4f19de5de36d386a3664e20b3600c49dce2dbc"
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/564d7bec3a784e6894731300389bfefc")
 
@@ -33,23 +33,19 @@ if __name__ == "__main__":
 	##### page contents
 	child_id = [c.id for c in page.children][-1]
 	child_page = client.get_block(child_id)
-	stocks = ['AAPL', 'GOOGL', 'MA', 'TSM', 'SBUX']
+	stocks = ['AAPL', 'TSM', 'SBUX']
 
 	stock_url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
-			'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/company/',
 			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/',
-			'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/company/',
-'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/company/']
+			'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/company/']
 	stock_url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
-		'https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/financials/',
-		'https://www.marketscreener.com/quote/stock/MASTERCARD-INCORPORATED-17163/financials/',
 		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/',
 'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/financials/']
 	stock_url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
 	stock_url_df = pd.DataFrame({'stock_name': stocks, 'url1': stock_url1, 'url2': stock_url2, 'url3': stock_url3})
 	
-	etfs = ['QQQ','IVV', 'SPY', 'VIG']
+	etfs = ['QQQ','SPY']
 
 	etf_url1 = ['https://etfdb.com/etf/' + etf + '/#etf-ticker-profile' for etf in etfs]
 	etf_url2 = ['https://www.etf.com/' + etf + '#overview' for etf in etfs]

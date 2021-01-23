@@ -106,7 +106,7 @@ if __name__ == "__main__":
 	last_friday = datetime.now() + relativedelta(weekday=FR(-1))
 	last_friday_str = last_friday.strftime("%m%d%y")
 
-	pdf_url = "https://www.factset.com/hubfs/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_" + last_friday_str + "A.pdf"
+	pdf_url = "https://www.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_" + last_friday_str + "A.pdf"
 	headers = {'Referer': pdf_url,
 		   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
 	save_name = "12fwd_" + last_friday_str
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 		last_friday = datetime.now() + relativedelta(weekday=FR(-i))
 		last_friday_str = last_friday.strftime("%m%d%y")
 
-		pdf_url = "https://www.factset.com/hubfs/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_" + last_friday_str + ".pdf"
+		pdf_url = "https://www.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_" + last_friday_str + ".pdf"
 		headers = {'Referer': pdf_url,
 			   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
 		save_name = "12fwd_" + last_friday_str

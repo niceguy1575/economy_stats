@@ -19,7 +19,7 @@ import time
 if __name__ == "__main__":
 	
 	# get token
-	niceguy_token = "c7570b064a2992f27adbf7b2b2e9f32846fdfeede4642ec922baa1a0567725644e4d2832f157083106779a1d9b30bc1382ec35130af276da8a302cb5892d09dc14ff97a2f36d31ead1168a85c22d"
+	niceguy_token = "ed06a3b886caad4a1cb7c8b5aad08d016ba6efe6b60223a686dbcc900ed147043b30c130a0eb5197e6fb3cb4ba113bc03e532d6ca23527d92ca43b4f19de5de36d386a3664e20b3600c49dce2dbc"
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/07cae222fb624bc5b402e96c1c86ed70")
 
