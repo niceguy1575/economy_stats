@@ -162,7 +162,7 @@ if __name__ == "__main__":
 			os.mkdir(save_path)
 	
 	### STOCK
-	stocks = ['AAPL', 'TSM', 'SBUX']
+	stocks = ['AAPL', 'TSM']
 
 	for stock in stocks:
 		print(stock)
@@ -172,7 +172,7 @@ if __name__ == "__main__":
 		get_stats_stock(stock, save_path, tbl_name, plot_name)
 	
 	### ETF
-	etfs = ['QQQ', 'SPY']
+	etfs = ['QQQ', 'SPY', 'ARKK']
 	for etf in etfs:
 		print(etf)
 		plot_name = etf + '_analysis'

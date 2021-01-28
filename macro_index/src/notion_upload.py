@@ -45,6 +45,7 @@ if __name__ == "__main__":
 	child_page.children.add_new(SubheaderBlock, title = now_f + ' 기준 거시경제 지표 표기')
 	child_page.children.add_new(TextBlock, title = ' ')
 
+	print("1. 부도위험")
 	# 1. 부도위험
 	child_page.children.add_new(HeaderBlock, title = '부도위험')
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 	child_page.children.add_new(TextBlock, title = '부도위험 최신값: ' + ice_value[0])
 	child_page.children.add_new(TextBlock, title = '부도위험 전월대비 증가율: ' + ice_value[1] + "%")
 	child_page.children.add_new(TextBlock, title = '부도위험 전분기대비 증가율: ' + ice_value[2] + "%")
-	child_page.children.add_new(TextBlock, title = '부도위험 전년대비 증가율: ' + ice_value[2] + "%")
+	child_page.children.add_new(TextBlock, title = '부도위험 전년대비 증가율: ' + ice_value[3] + "%")
 
 	# 1-2. ice graph
 	child_page.children.add_new(SubsubheaderBlock, title = '부도위험 3month')
@@ -64,6 +65,7 @@ if __name__ == "__main__":
 	ice_img.upload_file(data_path + "ICE.png")
 
 	#1-3. ted
+	print("2. ted")
 	child_page.children.add_new(SubheaderBlock, title = 'TED')
 
 	ted_value = data.loc[data.label == 'ted'].copy().stat.astype(str).values
@@ -80,6 +82,7 @@ if __name__ == "__main__":
 	ted_img.upload_file(data_path + "TED.png")
 
 	# 1-5. PMI
+	print("3. PMI")
 	child_page.children.add_new(SubsubheaderBlock, title = 'PMI (기준: 50)')
 
 	pmi_img = child_page.children.add_new(ImageBlock, width=500)    
@@ -88,6 +91,7 @@ if __name__ == "__main__":
 	pmi_img.upload_file(other_path + pmi_name)
 
 	# 1-6. HYG
+	print("4. HYG")
 	child_page.children.add_new(SubsubheaderBlock, title = 'HYG Stock')
 	child_page.children.add_new(TextBlock, title = '부도 위험이 낮아질수록 가격이 오르는 주식상품')
 
@@ -99,6 +103,7 @@ if __name__ == "__main__":
 	child_page.children.add_new(TextBlock, title = ' ')
 
 	# 2-1. S&P 500
+	print("5. S&P 500")
 	child_page.children.add_new(SubsubheaderBlock, title = 'S&P 500')
 
 	snp_img = child_page.children.add_new(ImageBlock, width=500)
@@ -107,6 +112,7 @@ if __name__ == "__main__":
 	snp_img.upload_file(other_path + snp_name)
 
 	# 2-2. 장단기금리차
+	v
 	child_page.children.add_new(SubheaderBlock, title = '장단기 금리차')
 
 	t102y = data.loc[data.label == 'ls'].copy().stat.astype(str).values
@@ -140,6 +146,7 @@ if __name__ == "__main__":
 	fr_img.upload_file(data_path + "funds_rate.png")
 
 	# 2-6. 미국 실업률
+	print("7. un-employment")
 	child_page.children.add_new(SubheaderBlock, title = '실업률')
 	ur = data.loc[data.label == 'ur'].stat.astype(str).values
 
@@ -159,7 +166,7 @@ if __name__ == "__main__":
 	fr_img.upload_file(data_path + "price.png")
 
 	# 3. 기타 투자 지표
-
+	print("8. others...")
 	# 3-1. Fear & Greed Index
 	child_page.children.add_new(SubsubheaderBlock, title = 'Fear & Greed Index')
 	child_page.children.add_new(TextBlock, title = '40 이하: 시기상 저렴 & 공포')

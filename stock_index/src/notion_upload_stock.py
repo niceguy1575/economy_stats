@@ -33,19 +33,17 @@ if __name__ == "__main__":
 	##### page contents
 	child_id = [c.id for c in page.children][-1]
 	child_page = client.get_block(child_id)
-	stocks = ['AAPL', 'TSM', 'SBUX']
+	stocks = ['AAPL', 'TSM']
 
 	stock_url1 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/company/',
-			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/',
-			'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/company/']
+			'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/company/']
 	stock_url2 = ['https://www.marketscreener.com/quote/stock/APPLE-INC-4849/financials/',
-		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/',
-'https://www.marketscreener.com/quote/stock/STARBUCKS-CORPORATION-4905/financials/']
+		'https://www.marketscreener.com/quote/stock/TAIWAN-SEMICONDUCTOR-MANU-40246786/financials/']
 	stock_url3 = ['https://www.marketbeat.com/stocks/NASDAQ/' + x + '/financials/' for x in stocks]
 
 	stock_url_df = pd.DataFrame({'stock_name': stocks, 'url1': stock_url1, 'url2': stock_url2, 'url3': stock_url3})
 	
-	etfs = ['QQQ','SPY']
+	etfs = ['QQQ','SPY', 'ARKK']
 
 	etf_url1 = ['https://etfdb.com/etf/' + etf + '/#etf-ticker-profile' for etf in etfs]
 	etf_url2 = ['https://www.etf.com/' + etf + '#overview' for etf in etfs]
