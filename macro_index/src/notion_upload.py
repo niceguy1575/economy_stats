@@ -19,7 +19,7 @@ import time
 if __name__ == "__main__":
 	
 	# get token
-	niceguy_token = "ed06a3b886caad4a1cb7c8b5aad08d016ba6efe6b60223a686dbcc900ed147043b30c130a0eb5197e6fb3cb4ba113bc03e532d6ca23527d92ca43b4f19de5de36d386a3664e20b3600c49dce2dbc"
+	niceguy_token = "0cc9bbdeea34ee61213d47d597353287eb114fec38aad86717fa0d4ac599bf044ce5ec07ac7f88daf06d3493657968d39441b9dcf6fb9d0f1d5d55c9d340997c93bffecc59123ee3384fa2d08fab"
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/07cae222fb624bc5b402e96c1c86ed70")
 
@@ -112,7 +112,6 @@ if __name__ == "__main__":
 	snp_img.upload_file(other_path + snp_name)
 
 	# 2-2. 장단기금리차
-	v
 	child_page.children.add_new(SubheaderBlock, title = '장단기 금리차')
 
 	t102y = data.loc[data.label == 'ls'].copy().stat.astype(str).values
