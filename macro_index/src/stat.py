@@ -34,6 +34,7 @@ def economy_line_plot(data, month, standard, title, xlab, ylab, save_path, save_
 	fig.suptitle(title, fontsize = 20)
 	plt.xlabel(xlab, fontsize = 16)
 	plt.ylabel(ylab, fontsize = 16)
+
 	fig.savefig(save_path + save_name)
 	
 def get_newest_stat(data):
@@ -137,9 +138,35 @@ def draw_plot_two_axis(data1, data2, month,
 	
 	fig.savefig(save_path + save_name)
 	
-	
+def getYieldSmry(date, date_type):
+    
+    if date_type == "today":
+        yield_date_df = yield_df.loc[yield_date_series == date]
+    
+    elif date_type == 'week':
+        yield_date_df = yield_df.loc[
+            (yield_date_series.apply(lambda x: x.year) == date.year) &
+            (yield_date_series.apply(lambda x: x.week) == date.week)
+        ]
+        
+    elif date_type == 'month':
+        yield_date_df = yield_df.loc[
+            (yield_date_series.apply(lambda x: x.year) == date.year) &
+            (yield_date_series.apply(lambda x: x.month) == date.month)
+        ]
+    else :
+        return None
+
+    yield_smry = yield_date_df.loc[:, yield_date_df.columns!='Date'].apply(lambda x: 
+                                                      sum(x.apply(float)) / len(x.apply(float))
+                                                      , axis = 'index')
+    yield_smry_df = pd.DataFrame(yield_smry, columns = ['yield'])
+    
+    return yield_smry_df
+
 # main definition
 if __name__ == "__main__":
+	#plt.rc('font', family='DejaVu')
 	data_dir = os.getcwd() + "/data/"
 	files = os.listdir(data_dir)
 
@@ -230,6 +257,30 @@ if __name__ == "__main__":
 	start_str = start_date.strftime('%Y-%m-%d')
 	
 	draw_yh_stock_price('HYG', start_str, end_str, save_path, "HYG-1month")
+	
+	# draw yield curve
+	yield_df = pd.read_csv(data_dir + "yield_curve.csv", sep = ",")
+	yield_date_series = yield_df.Date.apply(lambda x: datetime.strptime(x, '%m/%d/%y'))
+
+	yield_today = yield_date_series.tail(n = 1).tolist()[0]
+
+	yield_3m_before_day = (yield_today - relativedelta(months = 3))
+	yield_1m_before_day = (yield_today - relativedelta(months = 1))
+	yield_1w_before_day = (yield_today - relativedelta(weeks = 1))
+
+	y_today = getYieldSmry(yield_today, date_type = 'today')
+	y_1m = getYieldSmry(yield_1m_before_day, date_type = 'month')
+	y_3m = getYieldSmry(yield_3m_before_day, date_type = 'month')
+	y_1w = getYieldSmry(yield_1w_before_day, date_type = 'week')
+
+	y_plt_data = pd.concat([y_today, y_1m, y_3m, y_1w], axis = 1)
+
+	y_plt_data.columns = ['오늘: ' + yield_today.strftime('%Y-%m-%d'),
+	'1달전: ' + yield_1m_before_day.strftime('%Y-%m'),
+	'3달전: ' + yield_3m_before_day.strftime('%Y-%m'),
+	'1주일전: ' + yield_1w_before_day.strftime('%Y-%w') + '주차']
+
+	y_plt_data.plot().figure.savefig(save_path + 'yield_curve.png')
 	
 	# save stats
 	stats = [ice_stat1, ice_stat2, ice_stat3, ice_stat4, ted_stat1, ted_stat2, ted_stat3,

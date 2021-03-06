@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "activate python3"
-eval "$(conda shell.bash hook)"
-conda activate economy
+#echo "activate python3"
+#eval "$(conda shell.bash hook)"
+#conda activate economy
 
 echo "change the auth src"
 cd /Users/jongwon/python/economy/economy_stats/run_on_mac
@@ -30,4 +30,4 @@ python3 ../stock_index/src/notion_upload_stock.py
 
 
 
-conda deactivate
+#conda deactivate

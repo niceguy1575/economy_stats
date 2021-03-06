@@ -18,6 +18,7 @@
 1. git clone
 2. macro_index/run 경로로 이동
 3. bash 명령어 실행: **./economy_run.sh**
+4. mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
 
 ## 2. stock_index
 👉 미국 개별 주식의 데이터에 관련한 개괄적인 분석을 하기 위한 목표를 가지고 있습니다.
@@ -28,6 +29,11 @@
 2. 성장성 및 거래규모 분석
 
 예시: https://www.notion.so/niceguy1575/2020-10-13-a16f8fe1d31e4ba9a68468cb9816f25b
+
+## ISSUE
+notion의 API정책이 변화하면서 notion-py 패키지의 안정성문제가 자주 발생함.
+임시 오류해결을 위해 notion-upload 파일에 원본 소스 일부를 수정하였음.
+향후 notion API 정책에 따라 프로그램이 바뀔 여지가 있음 (21.3.6)
 
 ### 실행방법
 ~~~
@@ -75,6 +81,12 @@ packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMu
 
     [https://money.cnn.com/data/fear-and-greed/](https://money.cnn.com/data/fear-and-greed/)
 
+6. Yield Curve
+https://www.treasury.gov/resource-center/data-chart-center/interest-rates/pages/TextView.aspx?data=yieldYear&year=2021
+
+7. USD Libor
+https://www.global-rates.com/en/interest-rates/libor/american-dollar/american-dollar.aspx
+
 ## 수정사항
 
 21.01.23
@@ -84,6 +96,19 @@ packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMu
 3. 데이터 수집 url 수정 및 수집 주식 범위 변경
 ~~~
 
+21.3.6
+~~~
+1. 거시경제 지표 Yield Curve 추가
+2. USD 리보금리 추가
+3. FOMC 긴급소집 사이트 URL 추가
+~~~
 
-## 향후 보안사항
-1. 주식 관련 알람
+## 향후 추가예정
+개별상품 추가: Get stock, upload
+1. 각 상품의 beta 추가
+2. 전체 상품 비중에 대한 summary - pie chart -beta 순위
+
+Database 화
+1. 일단위 수집 데이터 엑셀 파일로 저장(csv형태)
+
+

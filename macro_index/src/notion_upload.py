@@ -13,7 +13,93 @@ from notion.block import HeaderBlock
 from notion.block import SubheaderBlock
 from notion.block import SubsubheaderBlock
 from notion.block import PageBlock
+from notion.block import BookmarkBlock
 import time
+
+from tzlocal import get_localzone
+
+import notion
+def call_load_page_chunk(self, page_id):
+
+    if self._client.in_transaction():
+        self._pages_to_refresh.append(page_id)
+        return
+
+    data = {
+        "pageId": page_id,
+        "limit": 100,
+        "cursor": {"stack": []},
+        "chunkNumber": 0,
+        "verticalColumns": False,
+    }
+
+    recordmap = self._client.post("loadPageChunk", data).json()["recordMap"]
+
+    self.store_recordmap(recordmap)
+
+def call_query_collection(
+    self,
+    collection_id,
+    collection_view_id,
+    search="",
+    type="table",
+    aggregate=[],
+    aggregations=[],
+    filter={},
+    sort=[],
+    calendar_by="",
+    group_by="",
+):
+
+    assert not (
+        aggregate and aggregations
+    ), "Use only one of `aggregate` or `aggregations` (old vs new format)"
+
+    # convert singletons into lists if needed
+    if isinstance(aggregate, dict):
+        aggregate = [aggregate]
+    if isinstance(sort, dict):
+        sort = [sort]
+
+    data = {
+        "collectionId": collection_id,
+        "collectionViewId": collection_view_id,
+        "loader": {
+            "limit": 1000000,
+            "loadContentCover": True,
+            "searchQuery": search,
+            "userLocale": "en",
+            "userTimeZone": str(get_localzone()),
+            "type": type,
+        },
+        "query": {
+            "aggregate": aggregate,
+            "aggregations": aggregations,
+            "filter": filter,
+            "sort": sort,
+        },
+    }
+
+    response = self._client.post("queryCollection", data).json()
+
+    self.store_recordmap(response["recordMap"])
+
+    return response["result"]
+
+def search_pages_with_parent(self, parent_id, search=""):
+    data = {
+        "query": search,
+        "parentId": parent_id,
+        "limit": 100,
+        "spaceId": self.current_space.id,
+    }
+    response = self.post("searchPagesWithParent", data).json()
+    self._store.store_recordmap(response["recordMap"])
+    return response["results"]
+
+notion.store.RecordStore.call_load_page_chunk = call_load_page_chunk
+notion.store.RecordStore.call_query_collection = call_query_collection
+notion.client.NotionClient.search_pages_with_parent = search_pages_with_parent
 
 # main definition
 if __name__ == "__main__":
@@ -45,7 +131,6 @@ if __name__ == "__main__":
 	child_page.children.add_new(SubheaderBlock, title = now_f + ' 기준 거시경제 지표 표기')
 	child_page.children.add_new(TextBlock, title = ' ')
 
-	print("1. 부도위험")
 	# 1. 부도위험
 	child_page.children.add_new(HeaderBlock, title = '부도위험')
 
@@ -65,7 +150,6 @@ if __name__ == "__main__":
 	ice_img.upload_file(data_path + "ICE.png")
 
 	#1-3. ted
-	print("2. ted")
 	child_page.children.add_new(SubheaderBlock, title = 'TED')
 
 	ted_value = data.loc[data.label == 'ted'].copy().stat.astype(str).values
@@ -82,7 +166,6 @@ if __name__ == "__main__":
 	ted_img.upload_file(data_path + "TED.png")
 
 	# 1-5. PMI
-	print("3. PMI")
 	child_page.children.add_new(SubsubheaderBlock, title = 'PMI (기준: 50)')
 
 	pmi_img = child_page.children.add_new(ImageBlock, width=500)    
@@ -91,19 +174,48 @@ if __name__ == "__main__":
 	pmi_img.upload_file(other_path + pmi_name)
 
 	# 1-6. HYG
-	print("4. HYG")
 	child_page.children.add_new(SubsubheaderBlock, title = 'HYG Stock')
 	child_page.children.add_new(TextBlock, title = '부도 위험이 낮아질수록 가격이 오르는 주식상품')
 
 	hyg_img = child_page.children.add_new(ImageBlock, width=500)
 	hyg_img.upload_file(data_path + "HYG-1month.png")
-
+	
+	# 1-7. Libor
+	libor_df = pd.read_csv(other_path + "usd_libor.csv", sep = ",")
+	
+	libor_df.columns = ['label', 'value']
+	overnight_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	week1_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	month1_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	month12_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	
+	child_page.children.add_new(HeaderBlock, title = '리보 금리')
+	child_page.children.add_new(TextBlock, title = '영국 은행끼리 빌리는 돈(콜금리) 비슷')
+	child_page.children.add_new(TextBlock, title = '단기 리보금리 > 장기 리보금리 일 경우 위험신호')
+	child_page.children.add_new(TextBlock, title = ' ')
+	
+	child_page.children.add_new(TextBlock, title = '당일 리보금리')
+	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = '1주 리보금리')
+	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = '1달 리보금리')
+	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = '1년 리보금리')
+	child_page.children.add_new(TextBlock, title = overnight_libor)
+	
+	# 1-8. 
+	child_page.children.add_new(SubheaderBlock, title = "FOMC 일정")
+	child_page.children.add_new(TextBlock, title = '긴급 컨퍼런스 콜 발생 시 위험신호')
+	
+	fomc_url = 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'
+	fomc_block = child_page.children.add_new(BookmarkBlock)
+	fomc_block.set_new_link(fomc_url)
+	
 	# 2. 경기
 	child_page.children.add_new(HeaderBlock, title = '경기')
 	child_page.children.add_new(TextBlock, title = ' ')
 
 	# 2-1. S&P 500
-	print("5. S&P 500")
 	child_page.children.add_new(SubsubheaderBlock, title = 'S&P 500')
 
 	snp_img = child_page.children.add_new(ImageBlock, width=500)
@@ -130,6 +242,11 @@ if __name__ == "__main__":
 	child_page.children.add_new(SubsubheaderBlock, title = '최근 1개월 10 / 20년 장기금리 추이')
 	long_mat_img = child_page.children.add_new(ImageBlock, width=500)
 	long_mat_img.upload_file(data_path + "long_maturity-1month.png")
+	
+	# 2-37. Yieldcurve
+	child_page.children.add_new(SubsubheaderBlock, title = 'Yield Curve')
+	yield_img = child_page.children.add_new(ImageBlock, width=500)
+	yield_img.upload_file(data_path + "yield_curve.png")
 	
 	# 2-4. 미국 기준 금리
 	child_page.children.add_new(SubheaderBlock, title = '기준금리')
@@ -163,7 +280,7 @@ if __name__ == "__main__":
 
 	fr_img = child_page.children.add_new(ImageBlock, width=500)
 	fr_img.upload_file(data_path + "price.png")
-
+	
 	# 3. 기타 투자 지표
 	print("8. others...")
 	# 3-1. Fear & Greed Index
