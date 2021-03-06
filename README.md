@@ -12,13 +12,17 @@
 2. 관심 통계 자료 생성
 3. notion upload
 
-예시: https://www.notion.so/niceguy1575/2020-10-08-0e39c38529de4eb4a4732efa6d1a2a44
+예시: https://www.notion.so/niceguy1575/2021-03-07-34b32a0ce37046bf90c4a160703af5bc
 
-### 실행방법
+~~~
+# 소스 실행방법
 1. git clone
 2. macro_index/run 경로로 이동
 3. bash 명령어 실행: **./economy_run.sh**
-4. mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
+
+# click in mac!
+mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
+~~~
 
 ## 2. stock_index
 👉 미국 개별 주식의 데이터에 관련한 개괄적인 분석을 하기 위한 목표를 가지고 있습니다.
@@ -28,12 +32,7 @@
 1. yahoo finance 기준 데이터 수집 및 표기
 2. 성장성 및 거래규모 분석
 
-예시: https://www.notion.so/niceguy1575/2020-10-13-a16f8fe1d31e4ba9a68468cb9816f25b
-
-## ISSUE
-notion의 API정책이 변화하면서 notion-py 패키지의 안정성문제가 자주 발생함.
-임시 오류해결을 위해 notion-upload 파일에 원본 소스 일부를 수정하였음.
-향후 notion API 정책에 따라 프로그램이 바뀔 여지가 있음 (21.3.6)
+예시: https://www.notion.so/niceguy1575/2021-03-07-74c919f9321143e7a126a97e450e3165
 
 ### 실행방법
 ~~~
@@ -45,6 +44,11 @@ notion의 API정책이 변화하면서 notion-py 패키지의 안정성문제가
 # click in mac
 1. 더블클릭: ./run_on_mac/0.0.run_all.command
 ~~~
+
+## ISSUE
+notion의 API정책이 변화하면서 notion-py 패키지의 안정성문제가 자주 발생함.
+임시 오류해결을 위해 notion-upload 파일에 원본 소스 일부를 수정하였음.
+향후 notion API 정책에 따라 프로그램이 바뀔 여지가 있음 (21.3.6)
 
 ## 활용 패키지 목록 및 참고
 
@@ -82,9 +86,11 @@ packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMu
     [https://money.cnn.com/data/fear-and-greed/](https://money.cnn.com/data/fear-and-greed/)
 
 6. Yield Curve
+
 https://www.treasury.gov/resource-center/data-chart-center/interest-rates/pages/TextView.aspx?data=yieldYear&year=2021
 
 7. USD Libor
+
 https://www.global-rates.com/en/interest-rates/libor/american-dollar/american-dollar.aspx
 
 ## 수정사항
