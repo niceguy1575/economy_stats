@@ -275,10 +275,10 @@ if __name__ == "__main__":
 
 	y_plt_data = pd.concat([y_today, y_1m, y_3m, y_1w], axis = 1)
 
-	y_plt_data.columns = ['오늘: ' + yield_today.strftime('%Y-%m-%d'),
-	'1달전: ' + yield_1m_before_day.strftime('%Y-%m'),
-	'3달전: ' + yield_3m_before_day.strftime('%Y-%m'),
-	'1주일전: ' + yield_1w_before_day.strftime('%Y-%w') + '주차']
+	y_plt_data.columns = ['today: ' + yield_today.strftime('%Y-%m-%d'),
+	'1mon_before: ' + yield_1m_before_day.strftime('%Y-%m'),
+	'3mon_before: ' + yield_3m_before_day.strftime('%Y-%m'),
+	'1week_before: ' + yield_1w_before_day.strftime('%Y-%w') + 'week']
 
 	y_plt_data.plot().figure.savefig(save_path + 'yield_curve.png')
 	
