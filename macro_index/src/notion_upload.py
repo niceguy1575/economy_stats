@@ -197,11 +197,11 @@ if __name__ == "__main__":
 	child_page.children.add_new(TextBlock, title = '당일 리보금리')
 	child_page.children.add_new(TextBlock, title = overnight_libor)
 	child_page.children.add_new(TextBlock, title = '1주 리보금리')
-	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = week1_libor)
 	child_page.children.add_new(TextBlock, title = '1달 리보금리')
-	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = month1_libor)
 	child_page.children.add_new(TextBlock, title = '1년 리보금리')
-	child_page.children.add_new(TextBlock, title = overnight_libor)
+	child_page.children.add_new(TextBlock, title = month12_libor)
 	
 	# 1-8. 
 	child_page.children.add_new(SubheaderBlock, title = "FOMC 일정")
