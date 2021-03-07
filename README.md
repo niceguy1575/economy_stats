@@ -107,14 +107,11 @@ https://www.global-rates.com/en/interest-rates/libor/american-dollar/american-do
 1. 거시경제 지표 Yield Curve 추가
 2. USD 리보금리 추가
 3. FOMC 긴급소집 사이트 URL 추가
+4. 개별상품의 beta 추가
 ~~~
 
 ## 향후 추가예정
-개별상품 추가: Get stock, upload
-1. 각 상품의 beta 추가
-2. 전체 상품 비중에 대한 summary - pie chart -beta 순위
-
-Database 화
+수집 데이터 적재: Database 화
 1. 일단위 수집 데이터 엑셀 파일로 저장(csv형태)
 
 
