@@ -62,19 +62,20 @@ def draw_analysis_plot(stock_name, start_date, end_date,
 
 def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 		##### 1. get statistics
-	aapl = yf.Ticker(stock_name)
+	stock_ticker = yf.Ticker(stock_name)
 
-	aapl_info = aapl.info
+	stock_info = stock_ticker.info
 
 	# sector
 	# 시가총액: marketCap; 	# 배당률: dividendRatel;	# pe ratio: trailingPE;	# eps: trailingEps;
 
-	sector = aapl_info['sector']
-	cap = aapl_info['marketCap']
-	dividends = aapl_info['dividendRate']
-	per = aapl_info['trailingPE']
-	eps = aapl_info['trailingEps']
-	close_price = aapl_info['previousClose']
+	sector = stock_info['sector']
+	beta = stock_info['beta']
+	cap = stock_info['marketCap']
+	dividends = stock_info['dividendRate']
+	per = stock_info['trailingPE']
+	eps = stock_info['trailingEps']
+	close_price = stock_info['previousClose']
 
 	# ROE = Net Income / Shareholder Equity
 	# BPS * ROE = EPS
@@ -112,8 +113,8 @@ def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 
 	target_price = eps * roe_num
 	
-	stats = [sector, cap, dividends, per, eps, close_price, roe_num, target_price]
-	lis = ['sector', '시가총액', '배당률', 'PER', 'EPS', '종가', 'ROE', '적정주가']
+	stats = [sector, cap, dividends, beta, per, eps, close_price, roe_num, target_price]
+	lis = ['sector', '시가총액', '배당률', 'beta','PER', 'EPS', '종가', 'ROE', '적정주가']
 
 	stat_df = pd.DataFrame({'label': lis, 'stats': stats})
 	stat_df.to_csv( save_path + tbl_name, sep = "|", index = False)
@@ -130,16 +131,17 @@ def get_stats_stock(stock_name, save_path, tbl_name, plot_name):
 
 def get_stats_etf(stock_name, save_path, tbl_name, plot_name):
 	##### 1. get statistics
-	qqq = yf.Ticker(stock_name)
+	etf_ticker = yf.Ticker(stock_name)
 
-	qqq_info = qqq.info
+	etf_info = etf_ticker.info
 
-	close_price = qqq_info['previousClose']
-	volume = qqq_info['volume']
-	dividends = qqq_info['dividendRate']
+	close_price = etf_info['previousClose']
+	volume = etf_info['volume']
+	dividends = etf_info['dividendRate']
+	beta = etf_info['beta3Year']
 
-	stats = [close_price, volume, dividends]
-	lis = ['종가', '거래량', '배당률']
+	stats = [close_price, volume, dividends, beta]
+	lis = ['종가', '거래량', '배당률', 'beta']
 
 	stat_df = pd.DataFrame({'label': lis, 'stats': stats})
 	stat_df.to_csv( save_path + tbl_name, sep = "|", index = False)

@@ -15,6 +15,7 @@ from notion.block import PageBlock
 from notion.block import BookmarkBlock
 import time
 
+
 from tzlocal import get_localzone
 
 import notion
@@ -164,12 +165,17 @@ if __name__ == "__main__":
 		dividend = stat_value[2]
 		grand_child_page.children.add_new(SubheaderBlock, title = "배당률")
 		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + dividend)
+
+		beta = str(round(float(stat_value[3]), 3) )
+		grand_child_page.children.add_new(SubheaderBlock, title = "BETA")
+		grand_child_page.children.add_new(TextBlock, title = 'BETA: ' + beta)
 		
-		per = str(round(float(stat_value[3]), 2) )
+		
+		per = str(round(float(stat_value[4]), 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "PER")
 		grand_child_page.children.add_new(TextBlock, title = 'PER: ' + per)
 		
-		eps = str(round(float(stat_value[4]), 2) )
+		eps = str(round(float(stat_value[5]), 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "EPS")
 		grand_child_page.children.add_new(TextBlock, title = 'EPS: ' + eps)
 		
@@ -177,11 +183,11 @@ if __name__ == "__main__":
 		grand_child_page.children.add_new(SubheaderBlock, title = "ROE")
 		grand_child_page.children.add_new(TextBlock, title = 'ROE: ' + roe)
 
-		price = str(round(float(stat_value[5]), 2) )
+		price = str(round(float(stat_value[7]), 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "Stock Price(종가)")
 		grand_child_page.children.add_new(TextBlock, title = 'Stock Price: ' + price)
 		
-		target = str(round(float(stat_value[7]), 2) )
+		target = str(round(float(stat_value[8]), 2) )
 		grand_child_page.children.add_new(SubheaderBlock, title = "Target Price(적정주가)")
 		grand_child_page.children.add_new(TextBlock, title = 'Target Price: ' + target)
 
@@ -236,6 +242,10 @@ if __name__ == "__main__":
 		dividend = stat_value[2]
 		grand_child_page.children.add_new(SubheaderBlock, title = "배당률")
 		grand_child_page.children.add_new(TextBlock, title = '배당률: ' + dividend)
+
+		beta = stat_value[3]
+		grand_child_page.children.add_new(SubheaderBlock, title = "BETA")
+		grand_child_page.children.add_new(TextBlock, title = 'BETA: ' + beta)
 		
 		# 2. add image
 		etf_image = grand_child_page.children.add_new(ImageBlock, width=650)
