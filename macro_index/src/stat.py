@@ -246,9 +246,17 @@ if __name__ == "__main__":
 	
 	# draw maturity plot
 	data1 = pd.read_csv(data_dir + "DGS10.txt", sep = "|")
+	data.columns = ['date', 'value10']
 	data2 = pd.read_csv(data_dir + "DGS20.txt", sep = "|")
+	data.columns = ['date', 'value20']
+
+	# 적은쪽에 맞추기
+	data_tmp = pd.merge(data1, data2, on = 'date', how = 'inner')
+	data1 = data_tmp[['date','value10']].copy()
+	data2 = data_tmp[['date','value20']].copy()
+
 	draw_plot_two_axis(data1, data2, 1, save_path = save_path, save_name = "long_maturity-1month")
-	
+
 	# draw stock price
 	end_date = datetime.now()
 	end_str = end_date.strftime('%Y-%m-%d')

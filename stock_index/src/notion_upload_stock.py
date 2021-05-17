@@ -105,7 +105,7 @@ notion.client.NotionClient.search_pages_with_parent = search_pages_with_parent
 if __name__ == "__main__":
 
 	# get token
-	niceguy_token = "0cc9bbdeea34ee61213d47d597353287eb114fec38aad86717fa0d4ac599bf044ce5ec07ac7f88daf06d3493657968d39441b9dcf6fb9d0f1d5d55c9d340997c93bffecc59123ee3384fa2d08fab"
+	niceguy_token = "db11fd6cddbdd7044f652a3e14114d246621b3ea523486d8cc2ec4014e9497fbccff654068a3425991befc937bb075f781e40b581e310887281f5c037d4a720f42148dc5d2125fba07e408b9e215"
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/564d7bec3a784e6894731300389bfefc")
 

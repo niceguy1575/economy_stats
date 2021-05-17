@@ -105,7 +105,7 @@ notion.client.NotionClient.search_pages_with_parent = search_pages_with_parent
 if __name__ == "__main__":
 	
 	# get token
-	niceguy_token = "0cc9bbdeea34ee61213d47d597353287eb114fec38aad86717fa0d4ac599bf044ce5ec07ac7f88daf06d3493657968d39441b9dcf6fb9d0f1d5d55c9d340997c93bffecc59123ee3384fa2d08fab"
+	niceguy_token = "db11fd6cddbdd7044f652a3e14114d246621b3ea523486d8cc2ec4014e9497fbccff654068a3425991befc937bb075f781e40b581e310887281f5c037d4a720f42148dc5d2125fba07e408b9e215"
 	client = NotionClient(token_v2 = niceguy_token)
 	page = client.get_block("https://www.notion.so/niceguy1575/07cae222fb624bc5b402e96c1c86ed70")
 
@@ -184,10 +184,10 @@ if __name__ == "__main__":
 	libor_df = pd.read_csv(other_path + "usd_libor.csv", sep = ",")
 	
 	libor_df.columns = ['label', 'value']
-	overnight_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	overnight_libor = str(round(float(libor_df.loc[libor_df.label == 'overnight'].value), 4))
 	week1_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
-	month1_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
-	month12_libor = str(round(float(libor_df.loc[libor_df.label == '1 week'].value), 4))
+	month1_libor = str(round(float(libor_df.loc[libor_df.label == '1 month'].value), 4))
+	month12_libor = str(round(float(libor_df.loc[libor_df.label == '12 months'].value), 4))
 	
 	child_page.children.add_new(HeaderBlock, title = '리보 금리')
 	child_page.children.add_new(TextBlock, title = '영국 은행끼리 빌리는 돈(콜금리) 비슷')
@@ -262,7 +262,6 @@ if __name__ == "__main__":
 	fr_img.upload_file(data_path + "funds_rate.png")
 
 	# 2-6. 미국 실업률
-	print("7. un-employment")
 	child_page.children.add_new(SubheaderBlock, title = '실업률')
 	ur = data.loc[data.label == 'ur'].stat.astype(str).values
 
@@ -282,7 +281,6 @@ if __name__ == "__main__":
 	fr_img.upload_file(data_path + "price.png")
 	
 	# 3. 기타 투자 지표
-	print("8. others...")
 	# 3-1. Fear & Greed Index
 	child_page.children.add_new(SubsubheaderBlock, title = 'Fear & Greed Index')
 	child_page.children.add_new(TextBlock, title = '40 이하: 시기상 저렴 & 공포')
@@ -291,5 +289,20 @@ if __name__ == "__main__":
 
 	fg_img = child_page.children.add_new(ImageBlock, width=800)
 	fg_img.upload_file(other_path + "FG_image.png")
+
+	# 3-2. 경기 사이클 확인
+	child_page.children.add_new(SubsubheaderBlock, title = '경기 사이클')
+	child_page.children.add_new(TextBlock, title = 'early ~ mid 가 투자 적기!')
+	cycle_url = 'https://institutional.fidelity.com/app/item/RD_13569_40890/business-cycle-update.html'
+	cycle_block = child_page.children.add_new(BookmarkBlock)
+	cycle_block.set_new_link(cycle_url)
+	
+	# 3-3. roro 지수 확인
+	child_page.children.add_new(SubsubheaderBlock, title = 'RORO지수 확인')
+	child_page.children.add_new(TextBlock, title = '클수록 위험, 작을수록 공포[=매수타이밍]')
+	roro_url = 'https://www.mvis-indices.com/indices/customised/atac-risk-on-risk-off-domestic'
+	roro_block = child_page.children.add_new(BookmarkBlock)
+	roro_block.set_new_link(roro_url)
+	
 
 	print("UPLOADED! " + now_f)
