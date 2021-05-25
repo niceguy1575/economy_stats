@@ -254,7 +254,9 @@ if __name__ == "__main__":
 	# 적은쪽에 맞추기
 	data_tmp = pd.merge(data1, data2, on = 'date', how = 'inner')
 	data1 = data_tmp[['date','value10']].copy()
+	data1.columns = ['date', 'value']
 	data2 = data_tmp[['date','value20']].copy()
+	data2.columns = ['date', 'value']
 
 	draw_plot_two_axis(data1, data2, 1, save_path = save_path, save_name = "long_maturity-1month")
 
