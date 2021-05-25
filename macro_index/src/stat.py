@@ -245,10 +245,11 @@ if __name__ == "__main__":
 			print("nothing to do on {}".format(txt))
 	
 	# draw maturity plot
+	#data_dir = "/Users/jongwon/python/economy/economy_stats/run_on_mac/data/"
 	data1 = pd.read_csv(data_dir + "DGS10.txt", sep = "|")
-	data.columns = ['date', 'value10']
+	data1.columns = ['date', 'value10']
 	data2 = pd.read_csv(data_dir + "DGS20.txt", sep = "|")
-	data.columns = ['date', 'value20']
+	data2.columns = ['date', 'value20']
 
 	# 적은쪽에 맞추기
 	data_tmp = pd.merge(data1, data2, on = 'date', how = 'inner')
