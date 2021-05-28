@@ -5,7 +5,7 @@
 #conda activate economy
 
 echo "change the auth src"
-cd /Users/jongwon/python/economy/economy_stats/run_on_mac
+cd /Users/jongwon/git/economy_stats/run
 chmod 777 ../macro_index/src
 chmod 777 ../stock_index/src
 
