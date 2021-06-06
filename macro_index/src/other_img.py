@@ -160,9 +160,9 @@ if __name__ == "__main__":
 	pdf_which = save_path + save_name + ".pdf"
 	importImgFromPDF(save_path, pdf_which, 1, 1)
 
-	rm_file = save_path + "p0-12.png"
-	os.remove(pdf_which)
-	os.remove(rm_file)
+	#rm_file = save_path + "p0-12.png"
+	#os.remove(pdf_which)
+	#os.remove(rm_file)
 	
 	# 3. Fear & Greed
 	url = "https://money.cnn.com/data/fear-and-greed/"
