@@ -258,6 +258,7 @@ if __name__ == "__main__":
 	data2 = data_tmp[['date','value20']].copy()
 	data2.columns = ['date', 'value']
 
+	print("draw yf")
 	draw_plot_two_axis(data1, data2, 1, save_path = save_path, save_name = "long_maturity-1month")
 
 	# draw stock price
