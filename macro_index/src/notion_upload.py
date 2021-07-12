@@ -219,7 +219,7 @@ if __name__ == "__main__":
 	child_page.children.add_new(SubsubheaderBlock, title = 'S&P 500')
 
 	snp_img = child_page.children.add_new(ImageBlock, width=500)
-	snp = re.compile("^p0")
+	snp = re.compile("^p0-37")
 	snp_name = list(filter(snp.search, other_files))[0]
 	snp_img.upload_file(other_path + snp_name)
 
