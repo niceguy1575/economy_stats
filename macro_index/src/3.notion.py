@@ -6,129 +6,84 @@ import pandas as pd
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import re
-from notion.client import NotionClient
-from notion.block import TextBlock
-from notion.block import ImageBlock
-from notion.block import HeaderBlock
-from notion.block import SubheaderBlock
-from notion.block import SubsubheaderBlock
-from notion.block import PageBlock
-from notion.block import BookmarkBlock
+import requests
 import time
-
 from tzlocal import get_localzone
 
-import notion
-def call_load_page_chunk(self, page_id):
 
-    if self._client.in_transaction():
-        self._pages_to_refresh.append(page_id)
-        return
+def postUrl(url, headers, data = None, retries=10):
+    resp = None
 
-    data = {
-        "pageId": page_id,
-        "limit": 100,
-        "cursor": {"stack": []},
-        "chunkNumber": 0,
-        "verticalColumns": False,
-    }
+    try:
+        resp = requests.post(url, json = data, headers = headers)
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        if 500 <= resp.status_code < 600 and retries > 0:
+            print('Retries : {0}'.format(retries))
+            return postUrl(url, param, retries - 1)
+        else:
+            print(resp.status_code)
+            print(resp.reason)
+            print(resp.request.headers)
+    return resp
 
-    recordmap = self._client.post("loadPageChunk", data).json()["recordMap"]
 
-    self.store_recordmap(recordmap)
-
-def call_query_collection(
-    self,
-    collection_id,
-    collection_view_id,
-    search="",
-    type="table",
-    aggregate=[],
-    aggregations=[],
-    filter={},
-    sort=[],
-    calendar_by="",
-    group_by="",
-):
-
-    assert not (
-        aggregate and aggregations
-    ), "Use only one of `aggregate` or `aggregations` (old vs new format)"
-
-    # convert singletons into lists if needed
-    if isinstance(aggregate, dict):
-        aggregate = [aggregate]
-    if isinstance(sort, dict):
-        sort = [sort]
-
-    data = {
-        "collectionId": collection_id,
-        "collectionViewId": collection_view_id,
-        "loader": {
-            "limit": 1000000,
-            "loadContentCover": True,
-            "searchQuery": search,
-            "userLocale": "en",
-            "userTimeZone": str(get_localzone()),
-            "type": type,
-        },
-        "query": {
-            "aggregate": aggregate,
-            "aggregations": aggregations,
-            "filter": filter,
-            "sort": sort,
-        },
-    }
-
-    response = self._client.post("queryCollection", data).json()
-
-    self.store_recordmap(response["recordMap"])
-
-    return response["result"]
-
-def search_pages_with_parent(self, parent_id, search=""):
-    data = {
-        "query": search,
-        "parentId": parent_id,
-        "limit": 100,
-        "spaceId": self.current_space.id,
-    }
-    response = self.post("searchPagesWithParent", data).json()
-    self._store.store_recordmap(response["recordMap"])
-    return response["results"]
-
-notion.store.RecordStore.call_load_page_chunk = call_load_page_chunk
-notion.store.RecordStore.call_query_collection = call_query_collection
-notion.client.NotionClient.search_pages_with_parent = search_pages_with_parent
-
-# main definition
 if __name__ == "__main__":
-	
-	# get token
-	niceguy_token = "db11fd6cddbdd7044f652a3e14114d246621b3ea523486d8cc2ec4014e9497fbccff654068a3425991befc937bb075f781e40b581e310887281f5c037d4a720f42148dc5d2125fba07e408b9e215"
-	client = NotionClient(token_v2 = niceguy_token)
-	page = client.get_block("https://www.notion.so/niceguy1575/07cae222fb624bc5b402e96c1c86ed70")
 
-	now = datetime.now() + timedelta(days=1)
-	now_f = now.strftime("%Y-%m-%d")
-	page.children.add_new(PageBlock, title=now_f)
-
-	# data load
+	# 0. 필요 데이터 setup
 	other_path = os.getcwd() + "/data/"
 	other_files = os.listdir(other_path)
 	data_path = os.getcwd() + "/plot/"
 	data = pd.read_csv(data_path + "stat_df.txt", sep = "|")
 
+	now = datetime.now() + timedelta(days=1)
+	now_f = now.strftime("%Y-%m-%d")
+    
+	secret_key = "secret_SzUg5gSUlHSzQthfKAZZk1icFugF3dFypnAc02DN826"
+	target_page_id = "07cae222-fb62-4bc5-b402-e96c1c86ed70"
+    
+	####################################
+	# 1. notion page 생성
+	####################################
+	# 1. 사전에 notion에서 사전에 페이지 획득 필요!
+	url = "https://api.notion.com/v1/pages"
+	headers = {
+		"Accept": "application/json",
+		"Notion-Version": "2022-02-22",
+		"Content-Type": "application/json",
+		"Authorization": "Bearer " + secret_key
+	}
+	page_data = {
+	"parent": { "page_id": target_page_id },
+	"properties": {
+		"title": {
+			"title": [{ "type": "text", "text": { "content": now_f } }]
+			}
+		},
+	"children": [ {
+		"object": "block",
+		"type": "paragraph",
+		"paragraph": {
+			"rich_text": [{ "type": "text", "text": { "content": "중요한 미국 경제 지표를 한눈에 살펴볼 수 있는 레포트" } }]
+			}
+	} ] }
+    
+	# create page data
+	postUrl(url, headers, data = page_data)
 	time.sleep(5)
 
 	####################################
-	# 맨 마지막 page에 내용 추가
+	# child block 생성
 	####################################
-	child_id = [c.id for c in page.children][-1]
-
-	child_page = client.get_block(child_id)
-
-	child_page.children.add_new(SubheaderBlock, title = now_f + ' 기준 거시경제 지표 표기')
+    # 새로 만들어진 page id 확인
+	makingID = parent_parse[parent_parse.has_children==True].tail(n = 1).id
+	
+    ####################################
+	# 밑에서부터 작업 진행 (22.03.09~)
+    # notion api 화.
+	####################################
+    
+	makingIDchild_page.children.add_new(SubheaderBlock, title = now_f + ' 기준 거시경제 지표 표기')
 	child_page.children.add_new(TextBlock, title = ' ')
 
 	# 1. 부도위험
