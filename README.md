@@ -2,7 +2,8 @@
 
 본 프로그램은 다음의 목표를 가지고 있습니다.
   
-## 1. macro_index
+## 오늘의 경제 리포트
+
 👉 미국 경제 지표를 일 단위로 수집하고 notion에서 모니터링 하기 위한 목표를 가지고 있습니다.
 주요 활용 프로그램은 python이며 notion-py 패키지를 적극적으로 활용했습니다. 
 
@@ -12,27 +13,7 @@
 2. 관심 통계 자료 생성
 3. notion upload
 
-예시: https://www.notion.so/niceguy1575/2021-03-07-34b32a0ce37046bf90c4a160703af5bc
-
-~~~
-# 소스 실행방법
-1. git clone
-2. macro_index/run 경로로 이동
-3. bash 명령어 실행: **./economy_run.sh**
-
-# click in mac!
-mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
-~~~
-
-## 2. stock_index
-👉 미국 개별 주식의 데이터에 관련한 개괄적인 분석을 하기 위한 목표를 가지고 있습니다.
-기업에 대한 개괄적인 정보 및 성장성, 거래규모, 유용한 정보를 담은 사이트로 연결해줍니다.
-
-상세 수행 내역은 다음과 같습니다.
-1. yahoo finance 기준 데이터 수집 및 표기
-2. 성장성 및 거래규모 분석
-
-예시: https://www.notion.so/niceguy1575/2021-03-07-74c919f9321143e7a126a97e450e3165
+예시: https://niceguy1575.notion.site/2022-03-13-d87cd06f268f4c0fa220982dddc19b15
 
 ### 실행방법
 ~~~
@@ -40,17 +21,7 @@ mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
 1. git clone 및경로로 파일 이동
 2. sh run.sh
 
-## 활용 패키지 목록 및 참고
-
-~~~ python
-# used packages
-packages = ['yfinance', 'pandas', 'requests', 're', 'numpy', 'matplotlib', 'PyMuPDF', 'notion', 'bs4', 'datetime', 'dateutil', 'fitz']
-~~~
-
-💁‍♀️ 페이스북 노션 홈페이지 홍보: [http://asq.kr/79zMEd5c0ri2](http://asq.kr/79zMEd5c0ri2)
-
 😊 참고 강의: http://frindle.co.kr// 
-
 
 ## 참고 site
 
