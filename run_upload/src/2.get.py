@@ -64,7 +64,7 @@ def pdfDownload(save_path, url, headers, file_nm, param=None, retries=3):
 		resp = requests.get(url, params=param, headers=headers)
 		resp.raise_for_status()
 
-		pdf_layer = save_path +  file_nm + ".pdf"
+		pdf_layer = save_path + '/' +file_nm + ".pdf"
 
 		with open(pdf_layer, 'wb') as f:
 			f.write(resp.content)
@@ -89,10 +89,10 @@ def importImgFromPDF(save_path, file, start_page = 1, end_page = 1):
 			xref = img[0]
 			pix = fitz.Pixmap(doc, xref)
 			if pix.n < 5:  # this is GRAY or RGB
-				pix.writePNG(save_path + "p%s-%s.png" % (i, xref))
+				pix.writePNG(save_path + "/p%s-%s.png" % (i, xref))
 			else:  # CMYK: convert to RGB first
 				pix1 = fitz.Pixmap(fitz.csRGB, pix)
-				pix1.writePNG(save_path + "p%s-%s.png" % (i, xref))
+				pix1.writePNG(save_path + "/p%s-%s.png" % (i, xref))
 				pix1 = None
 			pix = None
 
@@ -102,7 +102,7 @@ def importImgFromURL(save_path, url, file_nm):
 
 	response = requests.get(url)
 	img = Image.open(BytesIO(response.content))
-	img_save_path = save_path + file_nm + '.png'
+	img_save_path = save_path + '/' + file_nm + '.png'
 	img.save(img_save_path)
 	#print("img from URL has been saved!")
 
@@ -155,11 +155,17 @@ def getYieldDf(soup):
 
 # main definition
 if __name__ == "__main__":
-	api_keys = ["08e04acc750c26678182a33fe90050b4", "2cf918e4dfe6d347d99e73e75930f4a3","752db7a401cae5103d2f5493abd8e5d7", "45a87a079750aca5f50296985543695d"]
+    
+	save_path = os.getcwd() + "/data"
+	log_path = os.getcwd() + "/log"
+	today = datetime.today()
+	today_str = str(today.strftime("%Y-%m-%d"))
+    
+	api_keys = []
     
 	api_key = api_keys[0]
 	save_path = os.getcwd() + "/data"
-
+	log_path = os.getcwd() + "/log"
     # series list ticker
     # T10YIE - 10year break even rate, 10년 물가 상승률
     # T10Y2Y - 10 - 2, 장단기 금리차
@@ -174,12 +180,14 @@ if __name__ == "__main__":
                    "T10Y2Y", # 장단기 금리차
                    "FEDFUNDS"] # 금리
     
-	if not os.path.isdir(save_path):
-		os.mkdir(save_path)
-	
+	log_message1 = '2. get data'
+	os.system( 'echo "' + log_message1 + '" >> ' + log_path + '/economy_alert_log.txt' )
+    
     ############################################
     # 1. get series from fred
     ############################################
+	log_message2 = '2-1. get series from fred'
+	os.system( 'echo "' + log_message2 + '" >> ' + log_path + '/economy_alert_log.txt' )
     
 	# loop by series
 	for series in series_list:
@@ -210,28 +218,43 @@ if __name__ == "__main__":
 
 		series_result = series_df[['date', 'value']]
 		
-		layer = save_path + "/" + series + ".txt"
+		layer = save_path + "/fred_" + series + ".txt"
 
 		series_result.to_csv(layer, sep="|", index = False)
 
     ############################################
     # 2. cnn fear and greed
     ############################################
-	cnn_fg = CNNFearAndGreedIndex.CNNFearAndGreedIndex()
-	idx_str = cnn_fg.get_index()
+	#cnn_fg = CNNFearAndGreedIndex.CNNFearAndGreedIndex()
+	#idx_str = cnn_fg.get_index()
+    #
+	#idx_evaluate = re.findall(r'\(.*?\)',idx_str)
+	#idx_number = [int(s) for s in idx_str.split() if s.isdigit()]
+    #
+	#CNN_DF = pd.DataFrame(zip(idx_evaluate, idx_number), columns = ['idx','value'])
+	#layer = save_path + "/cnn_df.txt"
+    #
+	#CNN_DF.to_csv(layer, sep="|", index = False)
+	log_message3 = '2-2. get fear and greed'
+	os.system( 'echo "' + log_message3 + '" >> ' + log_path + '/economy_alert_log.txt' )
     
-	idx_evaluate = re.findall(r'\(.*?\)',idx_str)
-	idx_number = [int(s) for s in idx_str.split() if s.isdigit()]
-    
-	CNN_DF = pd.DataFrame(zip(idx_evaluate, idx_number), columns = ['idx','value'])
-	layer = save_path + "/cnn_df.txt"
+	url = "https://money.cnn.com/data/fear-and-greed/"
+	soup = getSoup(url)
 
-	CNN_DF.to_csv(layer, sep="|", index = False)
-	
+	id_url = soup.find_all("div", {"id": "needleChart"})
+
+	style_url = id_url[0]['style']
+	img_url = style_url.split("('", 1)[1].split("')")[0]
+
+	fear_greed_nm = "FG_image" #+ today_str
+	importImgFromURL(save_path, img_url, fear_greed_nm)
     
     ############################################
     # 3. S&P 500 12 FWD EPS
     ############################################
+	log_message4 = '2-3. SnP 500 12 FWD EPS'
+	os.system( 'echo "' + log_message4 + '" >> ' + log_path + '/economy_alert_log.txt' )
+    
 	today = datetime.now()
 
 	last_friday = today + relativedelta(weekday=FR(-1))
@@ -244,10 +267,11 @@ if __name__ == "__main__":
 	
 	pdfDownload(save_path, pdf_url, headers, save_name)
 
-	file_logic = not os.path.isfile( save_path + save_name )
+	file_logic = not os.path.isfile( save_path + '/' + save_name )
 	
 	i = 0
 	while file_logic:
+		#print(i)
 		i += 1
 		last_friday = today + relativedelta(weekday=FR(-i))
 		last_friday_str = last_friday.strftime("%m%d%y")
@@ -256,24 +280,28 @@ if __name__ == "__main__":
 		headers = {'Referer': pdf_url,
 			   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
 		save_name = "12fwd_" + last_friday_str
-		
+
 		pdfDownload(save_path, pdf_url, headers, save_name)
-
-		file_logic = not os.path.isfile( save_path + save_name + ".pdf" )
-
-	pdf_which = save_path + save_name + ".pdf"
+        
+		file_logic = not os.path.isfile( save_path + '/' + save_name + ".pdf" )
+        
+	pd.DataFrame([pdf_url]).to_csv(save_path + '/' + 'url_pdf.txt', sep = '|', index = False)
+	pdf_which = save_path + '/' +save_name + ".pdf"
 	importImgFromPDF(save_path, pdf_which, 1, 1)
 
-	rm_file = save_path + "p0-12.png"
-	#os.remove(pdf_which)
+	rm_file = save_path + '/' + "p0-12.png"
 	os.remove(rm_file)
     
     ############################################
     # 4. Fidelity Business Cycle
     ############################################
-
+	log_message5 = '2-4. Fidelity Buisness Cycle'
+	os.system( 'echo "' + log_message5 + '" >> ' + log_path + '/economy_alert_log.txt' )
+    
 	url = "https://institutional.fidelity.com/app/item/RD_13569_40890/business-cycle-update.html"
 	soup = getSoup(url)
 	imgs = soup.find_all('svg')
-	svg2png(bytestring=imgs[3].encode('utf-8'),write_to= save_path + 'business_cycle.png')
+	svg2png(bytestring=imgs[3].encode('utf-8'),write_to= save_path + '/business_cycle.png')
     
+	log_message6 = '2. get data success'
+	os.system( 'echo "' + log_message6 + '" >> ' + log_path + '/economy_alert_log.txt' )
