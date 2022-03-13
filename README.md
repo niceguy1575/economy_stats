@@ -37,18 +37,8 @@ mac의 경우 run_on_mac의 0.run_all.command 를 더블클릭! 😁
 ### 실행방법
 ~~~
 # on command
-1. git clone
-2. stock_index/run
-3. bash 명령어 실행: **./stock_run.sh**
-
-# click in mac
-1. 더블클릭: ./run_on_mac/0.0.run_all.command
-~~~
-
-## ISSUE
-notion의 API정책이 변화하면서 notion-py 패키지의 안정성문제가 자주 발생함.
-임시 오류해결을 위해 notion-upload 파일에 원본 소스 일부를 수정하였음.
-향후 notion API 정책에 따라 프로그램이 바뀔 여지가 있음 (21.3.6)
+1. git clone 및경로로 파일 이동
+2. sh run.sh
 
 ## 활용 패키지 목록 및 참고
 
@@ -93,25 +83,8 @@ https://www.treasury.gov/resource-center/data-chart-center/interest-rates/pages/
 
 https://www.global-rates.com/en/interest-rates/libor/american-dollar/american-dollar.aspx
 
-## 수정사항
-
-21.01.23
-~~~
-1. gcp 환경에서 mac local환경으로 이전
-2. 더블클릭으로 실행할 수 있도록 수정
-3. 데이터 수집 url 수정 및 수집 주식 범위 변경
-~~~
-
-21.3.6
-~~~
-1. 거시경제 지표 Yield Curve 추가
-2. USD 리보금리 추가
-3. FOMC 긴급소집 사이트 URL 추가
-4. 개별상품의 beta 추가
-~~~
-
-## 향후 추가예정
-수집 데이터 적재: Database 화
-1. 일단위 수집 데이터 엑셀 파일로 저장(csv형태)
-
+## 업데이트 항목
+1. notion official api로 동작 업데이트 
+2. 불필요한 정보 제외 / 꼭 확인해야하는 지표 위주로 리포트 구성
+3. 리포트 결과 메일로 송부
 
