@@ -121,9 +121,6 @@ if __name__ == "__main__":
 	log_message2 = '4-1. setup'
 	os.system( 'echo "' + log_message2 + '" >> ' + log_path + '/economy_alert_log.txt' )
 
-    
-	pd.DataFrame([mail_link]).to_csv(save_path + '/' + 'mail_link.txt', sep = '|', index = False)
-
 	# 1. 사전에 notion에서 사전에 페이지 획득 필요!
 	post_url = "https://api.notion.com/v1/pages"
 	headers = {
@@ -170,6 +167,8 @@ if __name__ == "__main__":
 	idstr = makingID.replace("-", "") 
 	base_link = 'https://niceguy1575.notion.site/'
 	mail_link = base_link + today_str + '-' + idstr
+	
+	pd.DataFrame([mail_link]).to_csv(save_path + '/' + 'mail_link.txt', sep = '|', index = False)
 
 	log_message4 = '4-3. get child id'
 	os.system( 'echo "' + log_message4 + '" >> ' + log_path + '/economy_alert_log.txt' )    
