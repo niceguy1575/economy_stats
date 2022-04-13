@@ -250,7 +250,19 @@ if __name__ == "__main__":
 	importImgFromURL(save_path, img_url, fear_greed_nm)
     
     ############################################
-    # 3. S&P 500 12 FWD EPS
+    # 3. Fidelity Business Cycle
+    ############################################
+	log_message5 = '2-4. Fidelity Buisness Cycle'
+	os.system( 'echo "' + log_message5 + '" >> ' + log_path + '/economy_alert_log.txt' )
+    
+	url = "https://institutional.fidelity.com/app/item/RD_13569_40890/business-cycle-update.html"
+	soup = getSoup(url)
+	imgs = soup.find_all('svg')
+	svg2png(bytestring=imgs[3].encode('utf-8'),write_to= save_path + '/business_cycle.png')
+    
+
+    ############################################
+    # 4. S&P 500 12 FWD EPS
     ############################################
 	log_message4 = '2-3. SnP 500 12 FWD EPS'
 	os.system( 'echo "' + log_message4 + '" >> ' + log_path + '/economy_alert_log.txt' )
@@ -291,17 +303,13 @@ if __name__ == "__main__":
 
 	rm_file = save_path + '/' + "p0-12.png"
 	os.remove(rm_file)
-    
+
     ############################################
-    # 4. Fidelity Business Cycle
+    # 5. Print end message
     ############################################
-	log_message5 = '2-4. Fidelity Buisness Cycle'
-	os.system( 'echo "' + log_message5 + '" >> ' + log_path + '/economy_alert_log.txt' )
-    
-	url = "https://institutional.fidelity.com/app/item/RD_13569_40890/business-cycle-update.html"
-	soup = getSoup(url)
-	imgs = soup.find_all('svg')
-	svg2png(bytestring=imgs[3].encode('utf-8'),write_to= save_path + '/business_cycle.png')
-    
+
 	log_message6 = '2. get data success'
 	os.system( 'echo "' + log_message6 + '" >> ' + log_path + '/economy_alert_log.txt' )
+    
+
+

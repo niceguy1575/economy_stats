@@ -109,10 +109,6 @@ if __name__ == "__main__":
 	data_dir = os.getcwd() + "/data/"
 	files = os.listdir(data_dir)
 
-	txt_regex = re.compile('pdf.txt$')
-	pdf_file = list(filter(txt_regex.search, files))
-	pdf_link = pd.read_csv(data_dir + pdf_file[0], sep = "|")
-
 	# url list
 	ice_url = 'https://plotly.com/~niceguy1575/77/'
 	fed_funds_url = 'https://plotly.com/~niceguy1575/81/'
@@ -121,10 +117,16 @@ if __name__ == "__main__":
 	fomc_url = 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'
 	fng_url = 'https://money.cnn.com/data/fear-and-greed'
 	roro_url = 'https://www.mvis-indices.com/indices/customised/atac-risk-on-risk-off-domestic'
-	pdf_url = pdf_link['0'][0]
 
 	log_message2 = '4-1. setup'
 	os.system( 'echo "' + log_message2 + '" >> ' + log_path + '/economy_alert_log.txt' )
+
+	# 0. mailing list
+	idstr = makingID.replace("-", "") 
+	base_link = 'https://niceguy1575.notion.site/'
+	mail_link = base_link + today_str + '-' + idstr
+    
+	pd.DataFrame([mail_link]).to_csv(save_path + '/' + 'mail_link.txt', sep = '|', index = False)
 
 	# 1. 사전에 notion에서 사전에 페이지 획득 필요!
 	post_url = "https://api.notion.com/v1/pages"
@@ -231,7 +233,14 @@ if __name__ == "__main__":
 	log_message = '4-4. notion upload 7'
 	os.system( 'echo "' + log_message + '" >> ' + log_path + '/economy_alert_log.txt' )    
     
+
 	# 8. SnP 500 12 FWD EPS
+	# pdf는 자주 바뀌지 않아, 오류가나도 page는 생성될 수 있도록 reading을 가장 마지막에 한다.
+	txt_regex = re.compile('pdf.txt$')
+	pdf_file = list(filter(txt_regex.search, files))
+	pdf_link = pd.read_csv(data_dir + pdf_file[0], sep = "|")
+	pdf_url = pdf_link['0'][0]
+
 	BlockHeader(childrenURL, "PATCH", headers, headingType = 2, text = 'SnP 500 12 FWD EPS')
 	BlockEmbed(childrenURL, "PATCH", headers, embedURL = pdf_url)
 	log_message = '4-4. notion upload 8'
@@ -240,11 +249,6 @@ if __name__ == "__main__":
 	# 9. print etc...
 	print("upload to notion! " + now_f)
     
-	idstr = makingID.replace("-", "") 
-	base_link = 'https://niceguy1575.notion.site/'
-	mail_link = base_link + today_str + '-' + idstr
-    
-	pd.DataFrame([mail_link]).to_csv(save_path + '/' + 'mail_link.txt', sep = '|', index = False)
 	
 	log_message = '4. upload success'
 	os.system( 'echo "' + log_message + '" >> ' + log_path + '/economy_alert_log.txt' )
