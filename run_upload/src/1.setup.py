@@ -32,7 +32,7 @@ if __name__ == "__main__":
 		import_or_install(p)
         
 	today = datetime.today()
-	today_str = str(today.strftime("%Y-%m-%d HH:mm:ss"))
+	today_str = str(today.strftime("%Y-%m-%d %H:%M:%S"))
 	
 	log_message1 = '1. setup'
 	log_message2 = 'package install success.'
