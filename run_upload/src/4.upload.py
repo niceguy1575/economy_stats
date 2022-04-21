@@ -91,8 +91,8 @@ def BlockBookmark(url, requestType, headers, bookmarkURL):
 
 if __name__ == "__main__":
 	
-	save_path = os.getcwd() + "/data"
-	log_path = os.getcwd() + "/log"
+	save_path = "/home/ec2-user/economyAlert/data"
+	log_path = "/home/ec2-user/economyAlert/log"
 	today = datetime.today()
 	today_str = str(today.strftime("%Y-%m-%d"))
     

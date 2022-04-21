@@ -156,16 +156,14 @@ def getYieldDf(soup):
 # main definition
 if __name__ == "__main__":
     
-	save_path = os.getcwd() + "/data"
-	log_path = os.getcwd() + "/log"
+	save_path = "/home/ec2-user/economyAlert/data"
+	log_path = "/home/ec2-user/economyAlert/log"
 	today = datetime.today()
 	today_str = str(today.strftime("%Y-%m-%d"))
     
 	api_keys = []
     
 	api_key = api_keys[0]
-	save_path = os.getcwd() + "/data"
-	log_path = os.getcwd() + "/log"
     # series list ticker
     # T10YIE - 10year break even rate, 10년 물가 상승률
     # T10Y2Y - 10 - 2, 장단기 금리차
