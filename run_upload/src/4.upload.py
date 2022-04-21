@@ -106,7 +106,7 @@ if __name__ == "__main__":
 	notion_secret_key = ""
 	target_page_id = "07cae222-fb62-4bc5-b402-e96c1c86ed70"
 	
-	data_dir = os.getcwd() + "/data/"
+	data_dir = save_path + "/"
 	files = os.listdir(data_dir)
 
 	# url list
