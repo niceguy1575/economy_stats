@@ -110,10 +110,10 @@ if __name__ == "__main__":
 	files = os.listdir(data_dir)
 
 	# url list
-	ice_url = 'https://plotly.com/~niceguy1575/77/'
-	fed_funds_url = 'https://plotly.com/~niceguy1575/81/'
-	t10yt2_url = 'https://plotly.com/~niceguy1575/79/'
-	inflate_url = 'https://plotly.com/~niceguy1575/75/'
+	ice_url = 'https://plotly.com/~niceguy1575.economy/3/'
+	fed_funds_url = 'https://plotly.com/~niceguy1575.economy/7/'
+	t10yt2_url = 'https://plotly.com/~niceguy1575.economy/5/'
+	inflate_url = 'https://plotly.com/~niceguy1575.economy/1/'
 	fomc_url = 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'
 	fng_url = 'https://money.cnn.com/data/fear-and-greed'
 	roro_url = 'https://www.mvis-indices.com/indices/customised/atac-risk-on-risk-off-domestic'
